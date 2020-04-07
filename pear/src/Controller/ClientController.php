@@ -1,5 +1,5 @@
 <?php
-// src/Controller/AppController.php
+// src/Controller/ClientController.php
 
 namespace App\Controller;
 
@@ -16,10 +16,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use App\Repository\UserRepository;
+use App\Controller\ArrayList;
 
 
 
-class AppController extends AbstractController
+class ClientController extends AbstractController
 {
   public function home()
   {
@@ -28,8 +30,11 @@ class AppController extends AbstractController
 
   public function add_user(Request $request)
   {
-    // On crée un objet Advert
+    // On crée un objet User
     $user = new User();
+
+
+    $entityManager = $this->getDoctrine()->getManager();
 
     // On crée le FormBuilder grâce au service form factory
     $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $user);
@@ -38,14 +43,29 @@ class AppController extends AbstractController
     $formBuilder
       ->add('nom',      TextType::class)
       ->add('prenom',     TextType::class)
-      ->add('email',   EmailType::class)
+      ->add('email',   EmailType::class)      
       ->add('password',    PasswordType::class)
+      ->add('naissance', DateType::class)
       ->add('save',      SubmitType::class)
     ;
-    // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
+
+
+    $form = $formBuilder->getForm();
+
+
+     $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $task = $form->getData();
+        
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('list_clients');
+    }
+
 
     // À partir du formBuilder, on génère le formulaire
-    $form = $formBuilder->getForm();
+    
 
     // On passe la méthode createView() du formulaire à la vue
     // afin qu'elle puisse afficher le formulaire toute seule
@@ -55,8 +75,20 @@ class AppController extends AbstractController
     ));
   }
 
-  public function list_obj()
+  public function list_clients( UserRepository $userRepository)
   {
-  	return new Response(" liste des objets à préter");
+
+    
+
+    $listUser = $userRepository -> findAll();
+
+    foreach ($listUser as $user){
+      $user -> getNom();
+      $user -> getPrenom();
+      $user -> getEmail();
+      //echo $user -> getNaissance().toString();
+
+    }
+  	return $this -> render ('app/list_clients.html.twig', array("listUser" => $listUser));
   }
 }
