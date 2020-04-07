@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Lender;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,5 +59,32 @@ class AppController extends AbstractController
   public function list_obj()
   {
   	return new Response(" liste des objets à préter");
+  }
+
+  public function add_lender(Request $request)
+  {
+    // On crée un objet Advert
+    $lender = new Lender();
+
+    // On crée le FormBuilder grâce au service form factory
+    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $lender);
+
+    // On ajoute les champs de l'entité que l'on veut à notre formulaire
+    $formBuilder
+      ->add('idlender',      TextType::class)
+      ->add('iduser',     TextType::class)
+      ->add('save',      SubmitType::class)
+    ;
+    // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
+
+    // À partir du formBuilder, on génère le formulaire
+    $form = $formBuilder->getForm();
+
+    // On passe la méthode createView() du formulaire à la vue
+    // afin qu'elle puisse afficher le formulaire toute seule
+
+    return $this->render('app/add_lender.html.twig', array(
+      'form' => $form->createView(),
+    ));
   }
 }

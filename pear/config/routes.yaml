@@ -9,3 +9,7 @@ list_obj:
   path: /objets
   controller: App\Controller\AppController::list_obj
 
+add_lender:
+   path: /ajouter-preteur
+   controller: App\Controller\AppController::add_lender
+
