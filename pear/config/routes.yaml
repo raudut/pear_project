@@ -9,3 +9,7 @@ list_obj:
   path: /objets
   controller: App\Controller\AppController::list_obj
 
+add_product:
+  path: /ajouter-objet
+  controller: App\Controller\AppController::add_product
+
