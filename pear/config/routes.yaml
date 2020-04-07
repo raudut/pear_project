@@ -1,11 +1,11 @@
 home:
     path: /
-    controller: App\Controller\AppController::home
+    controller: App\Controller\ClientController::home
 add_user:
     path: /ajouter-utilisateur
-    controller: App\Controller\AppController::add_user
+    controller: App\Controller\ClientController::add_user
 
-list_obj:
-  path: /objets
-  controller: App\Controller\AppController::list_obj
+list_clients:
+  path: /list_clients
+  controller: App\Controller\ClientController::list_clients
 

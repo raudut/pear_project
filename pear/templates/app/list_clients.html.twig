@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+ {% block title %}Liste des clients{% endblock %}
+ 
+    {% block body %}
+    	<table>
+            <tr>
+                <th> Id </th>
+    			<th> Nom </th>
+    			<th> Prenom </th>
+    			<th> Email </th>
+    			<th> Date de naissance </th>
+            </tr>
+
+    		{%for user in listUser %}
+<tr>
+                <td> {{ user.id}} </td>
+    			<td>{{ user.nom }}</td>
+    			<td>{{ user.prenom }}</td>
+    			<td>{{ user.email }}</td>
+</tr>    			
+    		{% endfor %}
+    	</table>
+{% endblock %}
