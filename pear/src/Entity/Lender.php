@@ -14,16 +14,27 @@ class Lender
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $idlender;
+    private $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
     private $iduser;
 
-    public function getIdlender(): ?int
+    public function getId(): ?int
     {
-        return $this->idlender;
+        return $this->id;
     }
+
     public function getIduser(): ?int
     {
         return $this->iduser;
     }
 
+    public function setIduser(int $iduser): self
+    {
+        $this->iduser = $iduser;
+
+        return $this;
+    }
 }

@@ -34,7 +34,6 @@ class ClientController extends AbstractController
     // On crée un objet User
     $user = new User();
 
-
     $entityManager = $this->getDoctrine()->getManager();
 
     // On crée le FormBuilder grâce au service form factory
@@ -49,7 +48,6 @@ class ClientController extends AbstractController
       ->add('naissance', DateType::class)
       ->add('save',      SubmitType::class)
     ;
-
 
     $form = $formBuilder->getForm();
 
@@ -79,44 +77,40 @@ class ClientController extends AbstractController
   public function list_clients( UserRepository $userRepository)
   {
 
-    
-
     $listUser = $userRepository -> findAll();
 
     foreach ($listUser as $user){
-      $user -> getNom();
-      $user -> getPrenom();
-      $user -> getEmail();
+       $user -> getNom();
+       $user -> getPrenom();
+       $user -> getEmail();
       //echo $user -> getNaissance().toString();
 
     }
   	return $this -> render ('app/list_clients.html.twig', array("listUser" => $listUser));
   }
-
-  public function add_lender(Request $request)
+  
+  public function connection ( UserRepository $userRepository)
   {
-    // On crée un objet Advert
-    $lender = new Lender();
 
-    // On crée le FormBuilder grâce au service form factory
-    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $lender);
+    $listUser = $userRepository -> findAll();
 
-    // On ajoute les champs de l'entité que l'on veut à notre formulaire
-    $formBuilder
-      ->add('idlender',      TextType::class)
-      ->add('iduser',     TextType::class)
-      ->add('save',      SubmitType::class)
-    ;
-    // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
+    foreach ($listUser as $user){
+      $email =  $user -> getEmail();
+      $password = $user -> getPassword();
+      $emailenter = "eee";
+      $passwordenter = "qd";
 
-    // À partir du formBuilder, on génère le formulaire
-    $form = $formBuilder->getForm();
+      
+      //echo $user -> getNaissance().toString();
+      if (strcmp ($email, $emailenter) && strcmp ($password, $passwordenter)){
 
-    // On passe la méthode createView() du formulaire à la vue
-    // afin qu'elle puisse afficher le formulaire toute seule
+        // return $this -> render ('app/home.html.twig', array("listUser" => $listUser));
+        // break; 
+      }
+    }
+    
 
-    return $this->render('app/add_lender.html.twig', array(
-      'form' => $form->createView(),
-    ));
+   return $this -> render('app/connection.html.twig');
   }
+  
 }

@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Lender;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Lender|null find($id, $lockMode = null, $lockVersion = null)
@@ -36,7 +36,7 @@ class LenderRepository extends ServiceEntityRepository
     }
     */
 
-    
+    /*
     public function findOneBySomeField($value): ?Lender
     {
         return $this->createQueryBuilder('l')
@@ -46,5 +46,5 @@ class LenderRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    
+    */
 }

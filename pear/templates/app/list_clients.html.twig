@@ -12,12 +12,12 @@
             </tr>
 
     		{%for user in listUser %}
-<tr>
+			<tr>
                 <td> {{ user.id}} </td>
     			<td>{{ user.nom }}</td>
     			<td>{{ user.prenom }}</td>
     			<td>{{ user.email }}</td>
-</tr>    			
+			</tr>    			
     		{% endfor %}
     	</table>
 {% endblock %}
