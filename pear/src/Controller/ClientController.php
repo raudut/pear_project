@@ -23,13 +23,8 @@ use App\Controller\ArrayList;
 
 
 class ClientController extends AbstractController
-{
-  public function home()
-  {
-  	return $this -> render('app/home.html.twig');
-  }
-
-  public function add_user(Request $request)
+{ 
+  public function add_client(Request $request)
   {
     // On crée un objet User
     $user = new User();
@@ -85,7 +80,8 @@ class ClientController extends AbstractController
       //echo $user -> getNaissance().toString();
 
     }
-  	return $this -> render ('app/list_clients.html.twig', array("listUser" => $listUser));
+    return $this -> render ('app/list_clients.html.twig', 
+    array("listUser" => $listUser));
   }
 
   public function delete_client(Request $request, UserRepository $userRepository)
@@ -118,28 +114,4 @@ class ClientController extends AbstractController
     ));
   } 
   
-  public function connection ( UserRepository $userRepository)
-  {
-
-    $listUser = $userRepository -> findAll();
-
-    foreach ($listUser as $user){
-      $email =  $user -> getEmail();
-      $password = $user -> getPassword();
-      $emailenter = "eee";
-      $passwordenter = "qd";
-
-      
-      //echo $user -> getNaissance().toString();
-      if (strcmp ($email, $emailenter) && strcmp ($password, $passwordenter)){
-
-        // return $this -> render ('app/home.html.twig', array("listUser" => $listUser));
-        // break; 
-      }
-    }
-    
-
-   return $this -> render('app/connection.html.twig');
-  }
-
 }

@@ -1,16 +1,16 @@
 #Route de l'appli
 home:
     path: /
-    controller: App\Controller\ClientController::home
+    controller: App\Controller\AppController::home
 
 connection:
   path: /conection
-  controller: App\Controller\ClientController::connection
+  controller: App\Controller\AppController::connection
 
 #Route des users
-add_user:
-    path: /add_client
-    controller: App\Controller\ClientController::add_user
+add_client:
+    path: /add-client
+    controller: App\Controller\ClientController::add_client
 
 list_clients:
   path: /list-clients
@@ -18,7 +18,7 @@ list_clients:
 
 
 delete_clients:
-  path: /delete_client
+  path: /delete-client
   controller: App\Controller\ClientController::delete_client
 
 
@@ -31,4 +31,16 @@ list_lenders:
   path: /list-lenders
   controller: App\Controller\LenderController::list_lenders
 
+
+add_product:
+  path: /add-product
+  controller: App\Controller\AppController::add_product
+
+list_products:
+  path: /list-products
+  controller: App\Controller\AppController::list_products
+
+delete_products:
+  path: /delete-products
+  controller: App\Controller\AppController::delete_products
 
