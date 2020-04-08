@@ -2,10 +2,14 @@ home:
     path: /
     controller: App\Controller\ClientController::home
 add_user:
-    path: /ajouter-utilisateur
+    path: /add_client
     controller: App\Controller\ClientController::add_user
 
 list_clients:
   path: /list_clients
   controller: App\Controller\ClientController::list_clients
+
+delete_clients:
+  path: /delete_client
+  controller: App\Controller\ClientController::delete_client
 

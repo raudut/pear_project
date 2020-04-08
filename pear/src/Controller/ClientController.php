@@ -13,9 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use App\Repository\UserRepository;
 use App\Controller\ArrayList;
 
@@ -55,7 +55,7 @@ class ClientController extends AbstractController
 
      $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-        $task = $form->getData();
+        $user = $form->getData();
         
         $entityManager->persist($user);
         $entityManager->flush();
@@ -77,9 +77,6 @@ class ClientController extends AbstractController
 
   public function list_clients( UserRepository $userRepository)
   {
-
-    
-
     $listUser = $userRepository -> findAll();
 
     foreach ($listUser as $user){
@@ -91,4 +88,34 @@ class ClientController extends AbstractController
     }
   	return $this -> render ('app/list_clients.html.twig', array("listUser" => $listUser));
   }
+
+  public function delete_client(Request $request, UserRepository $userRepository)
+  {
+   
+    $user = new User();
+
+    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class);
+
+    $formBuilder      ->add('id', IntegerType::class)
+                      ->add('save', SubmitType::class);
+
+    $form = $formBuilder -> getForm();
+    
+    $form->handleRequest($request);
+ 
+    if ($form->isSubmitted() && $form->isValid()) {
+      $id = $form -> getdata();
+     $user = $userRepository -> find($id);
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->remove($user);
+      $entityManager->flush();
+
+      $listUser = $userRepository -> findAll();
+      return $this -> render ('app/list_clients.html.twig', array("listUser" => $listUser));
+    }
+
+    return $this->render('app/delete_user.html.twig', array(
+      'form' => $form->createView(),
+    ));
+  } 
 }
