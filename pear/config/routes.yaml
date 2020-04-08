@@ -9,12 +9,17 @@ connection:
 
 #Route des users
 add_user:
-    path: /ajouter-utilisateur
+    path: /add_client
     controller: App\Controller\ClientController::add_user
 
 list_clients:
   path: /list-clients
   controller: App\Controller\ClientController::list_clients
+
+
+delete_clients:
+  path: /delete_client
+  controller: App\Controller\ClientController::delete_client
 
 
 #Route des preteurs
@@ -25,4 +30,5 @@ add_lender:
 list_lenders:
   path: /list-lenders
   controller: App\Controller\LenderController::list_lenders
+
 
