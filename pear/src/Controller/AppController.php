@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
+use App\Repository\ProductRepository;
 
 
 class AppController extends AbstractController
@@ -30,6 +32,8 @@ class AppController extends AbstractController
   {
     // On crée un objet Advert
     $user = new User();
+
+    $entityManager = $this->getDoctrine()->getManager();
 
     // On crée le FormBuilder grâce au service form factory
     $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $user);
@@ -55,8 +59,69 @@ class AppController extends AbstractController
     ));
   }
 
-  public function list_obj()
-  {
-  	return new Response(" liste des objets à préter");
+ 
+
+  public function add_product(Request $request){
+    // On crée un objet Advert
+    $product = new Product();
+    
+
+    // On crée le FormBuilder grâce au service form factory
+    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $product);
+
+    // On ajoute les champs de l'entité que l'on veut à notre formulaire
+    $formBuilder
+      ->add('nom',      TextType::class)
+      ->add('prix',     TextType::class)
+      ->add('caution',   TextType::class)
+      ->add('etat',    TextType::class)
+      ->add('emplacement',    TextType::class)
+      ->add('num_serie',    TextType::class)
+      ->add('kit',    TextType::class)
+      ->add('save',      SubmitType::class)
+    ;
+    // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
+
+    // À partir du formBuilder, on génère le formulaire
+    $form = $formBuilder->getForm();
+
+    $form->handleRequest($request);
+    if($form->isSubmitted() && $form->isValid()) {
+      $task = $form->getData();
+
+      $entityManager -> persist($product);
+      $entityManager->flush();
+
+      return $this->redirectToRouge('home');
+    }
+
+    // On passe la méthode createView() du formulaire à la vue
+    // afin qu'elle puisse afficher le formulaire toute seule
+
+    return $this->render('app/add_product.html.twig', array(
+      'form' => $form->createView(),
+    ));
   }
+
+  public function list_obj( ProductRepository $productRepository)
+  {
+
+    $listProduct = $productRepository -> findAll();
+
+    foreach ($listProduct as $product){
+       $product -> getNom();
+       $product -> getPrix();
+       $product -> getCaution();
+       $product -> getEtat();
+       $product -> getEmplacement();
+       $product -> getNumSerie();
+       $product -> getKit();
+
+    }
+    return $this -> render ('app/list_products.html.twig', array("listProduct" => $listProduct));
+  }
+  
+
+
+
 }
