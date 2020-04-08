@@ -5,10 +5,17 @@
         "This file is @generated automatically"
     ],
 <<<<<<< HEAD
+<<<<<<< HEAD
     "content-hash": "e7a36221d3a8910920ce892b0163986a",
 =======
     "content-hash": "249a957beeeaa8d36a9d383c4a3bdc97",
 >>>>>>> fb7358c93d1628c9a5dee4ab77f4ef66cee4165a
+=======
+    "content-hash": "249a957beeeaa8d36a9d383c4a3bdc97",
+=======
+    "content-hash": "e7a36221d3a8910920ce892b0163986a",
+>>>>>>> dev-elise
+>>>>>>> dev-roxanne
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2536,8 +2543,11 @@
             "description": "Symfony ErrorHandler Component",
             "homepage": "https://symfony.com",
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2020-03-23T12:42:46+00:00"
 =======
+=======
+>>>>>>> dev-roxanne
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -2553,7 +2563,13 @@
                 }
             ],
             "time": "2020-03-30T14:14:32+00:00"
+<<<<<<< HEAD
 >>>>>>> fb7358c93d1628c9a5dee4ab77f4ef66cee4165a
+=======
+=======
+            "time": "2020-03-23T12:42:46+00:00"
+>>>>>>> dev-elise
+>>>>>>> dev-roxanne
         },
         {
             "name": "symfony/event-dispatcher",
@@ -3289,8 +3305,11 @@
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2020-03-23T12:42:46+00:00"
 =======
+=======
+>>>>>>> dev-roxanne
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -3306,7 +3325,13 @@
                 }
             ],
             "time": "2020-03-30T14:14:32+00:00"
+<<<<<<< HEAD
 >>>>>>> fb7358c93d1628c9a5dee4ab77f4ef66cee4165a
+=======
+=======
+            "time": "2020-03-23T12:42:46+00:00"
+>>>>>>> dev-elise
+>>>>>>> dev-roxanne
         },
         {
             "name": "symfony/http-kernel",
@@ -3403,8 +3428,11 @@
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2020-03-27T16:19:50+00:00"
 =======
+=======
+>>>>>>> dev-roxanne
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -3420,7 +3448,13 @@
                 }
             ],
             "time": "2020-03-30T15:04:59+00:00"
+<<<<<<< HEAD
 >>>>>>> fb7358c93d1628c9a5dee4ab77f4ef66cee4165a
+=======
+=======
+            "time": "2020-03-27T16:19:50+00:00"
+>>>>>>> dev-elise
+>>>>>>> dev-roxanne
         },
         {
             "name": "symfony/inflector",
@@ -3697,8 +3731,11 @@
                 "mime-type"
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2020-03-16T12:10:54+00:00"
 =======
+=======
+>>>>>>> dev-roxanne
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -3714,7 +3751,13 @@
                 }
             ],
             "time": "2020-03-27T16:56:45+00:00"
+<<<<<<< HEAD
 >>>>>>> fb7358c93d1628c9a5dee4ab77f4ef66cee4165a
+=======
+=======
+            "time": "2020-03-16T12:10:54+00:00"
+>>>>>>> dev-elise
+>>>>>>> dev-roxanne
         },
         {
             "name": "symfony/monolog-bridge",
@@ -4458,8 +4501,11 @@
                 "reflection"
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2020-03-16T16:38:48+00:00"
 =======
+=======
+>>>>>>> dev-roxanne
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -4475,7 +4521,13 @@
                 }
             ],
             "time": "2020-03-27T16:56:45+00:00"
+<<<<<<< HEAD
 >>>>>>> fb7358c93d1628c9a5dee4ab77f4ef66cee4165a
+=======
+=======
+            "time": "2020-03-16T16:38:48+00:00"
+>>>>>>> dev-elise
+>>>>>>> dev-roxanne
         },
         {
             "name": "symfony/property-info",
@@ -4784,8 +4836,11 @@
             "description": "Symfony Security Component - Core Library",
             "homepage": "https://symfony.com",
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2020-03-23T12:42:46+00:00"
 =======
+=======
+>>>>>>> dev-roxanne
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -4801,7 +4856,13 @@
                 }
             ],
             "time": "2020-03-30T14:14:32+00:00"
+<<<<<<< HEAD
 >>>>>>> fb7358c93d1628c9a5dee4ab77f4ef66cee4165a
+=======
+=======
+            "time": "2020-03-23T12:42:46+00:00"
+>>>>>>> dev-elise
+>>>>>>> dev-roxanne
         },
         {
             "name": "symfony/security-csrf",
@@ -4980,8 +5041,11 @@
             "description": "Symfony Security Component - HTTP Integration",
             "homepage": "https://symfony.com",
 <<<<<<< HEAD
+<<<<<<< HEAD
             "time": "2020-03-23T12:42:46+00:00"
 =======
+=======
+>>>>>>> dev-roxanne
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -4997,7 +5061,13 @@
                 }
             ],
             "time": "2020-03-30T14:14:32+00:00"
+<<<<<<< HEAD
 >>>>>>> fb7358c93d1628c9a5dee4ab77f4ef66cee4165a
+=======
+=======
+            "time": "2020-03-23T12:42:46+00:00"
+>>>>>>> dev-elise
+>>>>>>> dev-roxanne
         },
         {
             "name": "symfony/serializer",
@@ -5788,7 +5858,10 @@
                 "dump"
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> dev-roxanne
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -5803,7 +5876,12 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
 >>>>>>> fb7358c93d1628c9a5dee4ab77f4ef66cee4165a
+=======
+=======
+>>>>>>> dev-elise
+>>>>>>> dev-roxanne
             "time": "2020-03-27T16:56:45+00:00"
         },
         {
@@ -6723,7 +6801,10 @@
                 "scaffolding"
             ],
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> dev-roxanne
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -6738,7 +6819,12 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
 >>>>>>> fb7358c93d1628c9a5dee4ab77f4ef66cee4165a
+=======
+=======
+>>>>>>> dev-elise
+>>>>>>> dev-roxanne
             "time": "2020-04-05T10:50:59+00:00"
         },
         {

@@ -44,7 +44,7 @@ class Product
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $num_serie;
+    private $numSerie;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -119,12 +119,12 @@ class Product
 
     public function getNumSerie(): ?string
     {
-        return $this->num_serie;
+        return $this->numSerie;
     }
 
-    public function setNumSerie(string $num_serie): self
+    public function setNumSerie(string $numSerie): self
     {
-        $this->num_serie = $num_serie;
+        $this->numSerie = $numSerie;
 
         return $this;
     }

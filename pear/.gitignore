@@ -1,5 +1,7 @@
 
 ###> symfony/framework-bundle ###
+/.env
+/composer.lock
 /.env.local
 /.env.local.php
 /.env.*.local

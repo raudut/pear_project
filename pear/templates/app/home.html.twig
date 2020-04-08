@@ -12,24 +12,25 @@
 	<div>
 <p> Pear est un site de prêt gestion de prêt de materiel. Pour l'utiliser vous devez d'abord créer un compte</p>
 
-<input type="button" name="delete_client_link" value="Supprimer un client" onclick="self.location.href='/delete_client'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
+<input type="button" name="delete_client_link" value="Supprimer un client" onclick="self.location.href='/delete-client'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
 
-<input type="button" name="add_client_link" value="S'enregistrer" onclick="self.location.href='/ajouter-utilisateur'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
+<input type="button" name="delete_products_link" value="Supprimer un produit" onclick="self.location.href='/delete-products'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
+
+<input type="button" name="add_client_link" value="S'enregistrer" onclick="self.location.href='/add-client'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
 <input type="button" name="add_lender_link" value="Passer un utilisateur en préteur" onclick="self.location.href='/add-lender'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
-<input type="button" name="connection" value="Se connecter" onclick="self.location.href='/conection'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 	
+{# <input type="button" name="connection" value="Se connecter" onclick="self.location.href='/conection'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 	 #}
 <input type="button" name="list_client_link" value="visualiser les clients" onclick="self.location.href='/list-clients'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 	
 
 <input type="button" name="list_lender_link" value="Visualiser les préteurs" onclick="self.location.href='/list-lenders'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 	
 
-<input type="button" name="add_object_link" value="Ajouter un objet" onclick="self.location.href='/ajouter-objet'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
-
-<input type="button" name="list_object_link" value="Voir la liste des objets" onclick="self.location.href='/objets'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
 	</div>
 
+	<div>
+<input type="button" name="add_product_link" value="Ajouter un objet" onclick="self.location.href='/add-product'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
+	</div>
 
-
+	<div>
+<input type="button" name="list_object_link" value="Voir la liste des objets" onclick="self.location.href='/list-products'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
+	</div>
 
 	{% endblock %}
-
-	
-
