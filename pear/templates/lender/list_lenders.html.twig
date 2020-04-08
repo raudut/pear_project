@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+ {% block title %}Liste des clients{% endblock %}
+ 
+    {% block body %}
+    	<table>
+            <tr>
+                <th> Id du préteur </th>
+    			<th> Id du user associé</th>
+
+            </tr>
+
+    		{%for lender in listLender %}
+			<tr>
+                <td> {{ lender.id}} </td>
+    			<td>{{ lender.iduser }}</td> 
+			</tr>    			
+    		{% endfor %}
+    	</table>
+{% endblock %}

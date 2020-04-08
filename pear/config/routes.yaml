@@ -1,13 +1,36 @@
+#Route de l'appli
 home:
     path: /
-    controller: App\Controller\AppController::home
-add_user:
-    path: /ajouter-utilisateur
-    controller: App\Controller\AppController::add_user
+    controller: App\Controller\ClientController::home
 
-list_obj:
-  path: /objets
-  controller: App\Controller\AppController::list_obj
+connection:
+  path: /conection
+  controller: App\Controller\ClientController::connection
+
+#Route des users
+add_user:
+    path: /add_client
+    controller: App\Controller\ClientController::add_user
+
+list_clients:
+  path: /list-clients
+  controller: App\Controller\ClientController::list_clients
+
+
+delete_clients:
+  path: /delete_client
+  controller: App\Controller\ClientController::delete_client
+
+
+#Route des preteurs
+add_lender:
+   path: /add-lender
+   controller: App\Controller\LenderController::add_lender
+
+list_lenders:
+  path: /list-lenders
+  controller: App\Controller\LenderController::list_lenders
+
 
 add_product:
   path: /ajouter-objet
