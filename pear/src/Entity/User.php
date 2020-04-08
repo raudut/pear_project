@@ -7,45 +7,104 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-use Doctrine\Common\Collections\ArrayCollection;
-
 class User
 {
-  private $id;
-  private $nom;
-  private $prenom;
-  private $email;
-  private $password;
-  private $status;
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-  public function getId()
-  {
-    return $this->id;
-  }
-   public function getNom()
-  {
-    return $this->nom;
-  }
-   public function getPrenom()
-  {
-    return $this->prenom;
-  }
-   public function getEmail()
-  {
-    return $this->email;
-  }
- public function getPassword()
-  {
-    return $this->password;
-  }
-   public function getStatus()
-  {
-    return $this->status;
-  }
-  public function __construct()
-  {
-    $this->status   = new ArrayCollection();
-  }
-  
-  // … Les getters et setters
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $prenom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $naissance;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getNaissance(): ?\DateTimeInterface
+    {
+        return $this->naissance;
+    }
+
+    public function setNaissance(\DateTimeInterface $naissance): self
+    {
+        $this->naissance = $naissance;
+
+        return $this;
+    }
+
+ 
 }
