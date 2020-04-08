@@ -7,52 +7,142 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  */
-use Doctrine\Common\Collections\ArrayCollection;
-
 class Product
 {
-  private $id;
-  private $nom;
-  private $prix;
-  private $etat;
-  private $caution;
-  private $emplacement;
-  private $num_serie;
-  private $kit;
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-  public function getId()
-  {
-    return $this->id;
-  }
-   public function getNom()
-  {
-    return $this->nom;
-  }
-   public function getPrix()
-  {
-    return $this->prix;
-  }
-   public function getEtat()
-  {
-    return $this->etat;
-  }
- public function getCaution()
-  {
-    return $this->caution;
-  }
-   public function getEmplacement()
-  {
-    return $this->emplacement;
-  }
-  public function getNumSerie()
-  {
-    return $this->num_serie;
-  }
-  public function getKit()
-  {
-    return $this->kit;
-  }
-  
-  
-  
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $prix;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $caution;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $etat;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $emplacement;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $num_serie;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $kit;
+
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrix(): ?string
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(string $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getCaution(): ?string
+    {
+        return $this->caution;
+    }
+
+    public function setCaution(string $caution): self
+    {
+        $this->caution = $caution;
+
+        return $this;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(string $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getEmplacement(): ?string
+    {
+        return $this->emplacement;
+    }
+
+    public function setEmplacement(string $emplacement): self
+    {
+        $this->emplacement = $emplacement;
+
+        return $this;
+    }
+
+    public function getNumSerie(): ?string
+    {
+        return $this->num_serie;
+    }
+
+    public function setNumSerie(string $num_serie): self
+    {
+        $this->num_serie = $num_serie;
+
+        return $this;
+    }
+
+    public function getKit(): ?string
+    {
+        return $this->kit;
+    }
+
+    public function setKit(string $kit): self
+    {
+        $this->kit = $kit;
+
+        return $this;
+    }
+
+    
+
+ 
 }
+

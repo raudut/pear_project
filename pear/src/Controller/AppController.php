@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
+use App\Repository\ProductRepository;
 
 
 class AppController extends AbstractController
@@ -31,6 +32,8 @@ class AppController extends AbstractController
   {
     // On crée un objet Advert
     $user = new User();
+
+    $entityManager = $this->getDoctrine()->getManager();
 
     // On crée le FormBuilder grâce au service form factory
     $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $user);
@@ -56,14 +59,12 @@ class AppController extends AbstractController
     ));
   }
 
-  public function list_obj()
-  {
-  	return new Response(" liste des objets à préter");
-  }
+ 
 
   public function add_product(Request $request){
     // On crée un objet Advert
     $product = new Product();
+    
 
     // On crée le FormBuilder grâce au service form factory
     $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $product);
@@ -84,6 +85,16 @@ class AppController extends AbstractController
     // À partir du formBuilder, on génère le formulaire
     $form = $formBuilder->getForm();
 
+    $form->handleRequest($request);
+    if($form->isSubmitted() && $form->isValid()) {
+      $task = $form->getData();
+
+      $entityManager -> persist($product);
+      $entityManager->flush();
+
+      return $this->redirectToRouge('home');
+    }
+
     // On passe la méthode createView() du formulaire à la vue
     // afin qu'elle puisse afficher le formulaire toute seule
 
@@ -91,6 +102,26 @@ class AppController extends AbstractController
       'form' => $form->createView(),
     ));
   }
+
+  public function list_obj( ProductRepository $productRepository)
+  {
+
+    $listProduct = $productRepository -> findAll();
+
+    foreach ($listProduct as $product){
+       $product -> getNom();
+       $product -> getPrix();
+       $product -> getCaution();
+       $product -> getEtat();
+       $product -> getEmplacement();
+       $product -> getNumSerie();
+       $product -> getKit();
+
+    }
+    return $this -> render ('app/list_products.html.twig', array("listProduct" => $listProduct));
+  }
+  
+
 
 
 }

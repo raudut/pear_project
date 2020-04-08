@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+ {% block title %}Liste des objets{% endblock %}
+ 
+    {% block body %}
+    	<table>
+            <tr>
+                <th> Id </th>
+    			<th> Nom </th>
+    			<th> Prix </th>
+    			<th> Caution </th>
+    			<th> Etat </th>
+                <th> Emplacement </th>
+                <th> Numéro de série </th>
+                <th> Kit </th>
+            </tr>
+
+    		{%for product in listProduct %}
+			<tr>
+                <td> {{ product.id}} </td>
+    			<td>{{ product.nom }}</td>
+    			<td>{{ product.prix }}</td>
+    			<td>{{ product.caution }}</td>
+                <td>{{ product.etat }}</td>
+                <td>{{ product.emplacement }}</td>
+                <td>{{ product.num_serie }}</td>
+                <td>{{ product.kit }}</td>
+			</tr>    			
+    		{% endfor %}
+    	</table>
+{% endblock %}
