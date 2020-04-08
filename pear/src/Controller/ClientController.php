@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Lender;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +34,6 @@ class ClientController extends AbstractController
     // On crée un objet User
     $user = new User();
 
-
     $entityManager = $this->getDoctrine()->getManager();
 
     // On crée le FormBuilder grâce au service form factory
@@ -48,7 +48,6 @@ class ClientController extends AbstractController
       ->add('naissance', DateType::class)
       ->add('save',      SubmitType::class)
     ;
-
 
     $form = $formBuilder->getForm();
 
@@ -80,9 +79,9 @@ class ClientController extends AbstractController
     $listUser = $userRepository -> findAll();
 
     foreach ($listUser as $user){
-      $user -> getNom();
-      $user -> getPrenom();
-      $user -> getEmail();
+       $user -> getNom();
+       $user -> getPrenom();
+       $user -> getEmail();
       //echo $user -> getNaissance().toString();
 
     }
@@ -118,4 +117,29 @@ class ClientController extends AbstractController
       'form' => $form->createView(),
     ));
   } 
+  
+  public function connection ( UserRepository $userRepository)
+  {
+
+    $listUser = $userRepository -> findAll();
+
+    foreach ($listUser as $user){
+      $email =  $user -> getEmail();
+      $password = $user -> getPassword();
+      $emailenter = "eee";
+      $passwordenter = "qd";
+
+      
+      //echo $user -> getNaissance().toString();
+      if (strcmp ($email, $emailenter) && strcmp ($password, $passwordenter)){
+
+        // return $this -> render ('app/home.html.twig', array("listUser" => $listUser));
+        // break; 
+      }
+    }
+    
+
+   return $this -> render('app/connection.html.twig');
+  }
+
 }
