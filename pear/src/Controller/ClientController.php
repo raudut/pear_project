@@ -14,22 +14,17 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use App\Repository\UserRepository;
 use App\Controller\ArrayList;
 
 
 
 class ClientController extends AbstractController
-{
-  public function home()
-  {
-  	return $this -> render('app/home.html.twig');
-  }
-
-  public function add_user(Request $request)
+{ 
+  public function add_client(Request $request)
   {
     // On crée un objet User
     $user = new User();
@@ -54,7 +49,7 @@ class ClientController extends AbstractController
 
      $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-        $task = $form->getData();
+        $user = $form->getData();
         
         $entityManager->persist($user);
         $entityManager->flush();
@@ -76,7 +71,6 @@ class ClientController extends AbstractController
 
   public function list_clients( UserRepository $userRepository)
   {
-
     $listUser = $userRepository -> findAll();
 
     foreach ($listUser as $user){
@@ -86,31 +80,38 @@ class ClientController extends AbstractController
       //echo $user -> getNaissance().toString();
 
     }
-  	return $this -> render ('app/list_clients.html.twig', array("listUser" => $listUser));
+    return $this -> render ('app/list_clients.html.twig', 
+    array("listUser" => $listUser));
   }
-  
-  public function connection ( UserRepository $userRepository)
+
+  public function delete_client(Request $request, UserRepository $userRepository)
   {
+   
+    $user = new User();
 
-    $listUser = $userRepository -> findAll();
+    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class);
 
-    foreach ($listUser as $user){
-      $email =  $user -> getEmail();
-      $password = $user -> getPassword();
-      $emailenter = "eee";
-      $passwordenter = "qd";
+    $formBuilder      ->add('id', IntegerType::class)
+                      ->add('save', SubmitType::class);
 
-      
-      //echo $user -> getNaissance().toString();
-      if (strcmp ($email, $emailenter) && strcmp ($password, $passwordenter)){
-
-        // return $this -> render ('app/home.html.twig', array("listUser" => $listUser));
-        // break; 
-      }
-    }
+    $form = $formBuilder -> getForm();
     
+    $form->handleRequest($request);
+ 
+    if ($form->isSubmitted() && $form->isValid()) {
+      $id = $form -> getdata();
+     $user = $userRepository -> find($id);
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->remove($user);
+      $entityManager->flush();
 
-   return $this -> render('app/connection.html.twig');
-  }
+      $listUser = $userRepository -> findAll();
+      return $this -> render ('app/list_clients.html.twig', array("listUser" => $listUser));
+    }
+
+    return $this->render('app/delete_user.html.twig', array(
+      'form' => $form->createView(),
+    ));
+  } 
   
 }
