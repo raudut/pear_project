@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -16,6 +17,27 @@ class User
      */
     private $id;
 
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+// HERE 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $naissance;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -26,48 +48,11 @@ class User
      */
     private $prenom;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $email;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $naissance;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -82,9 +67,48 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
-        return $this->password;
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_BORROWER';
+
+        return array_unique($roles);
+    }
+    public function getRolesNames(){
+        $roles = $this->getRoles('security.role_hierarchy'); 
+        return array(
+            "Administrateur" => "ROLE_ADMIN",
+            "Loueur" => "ROLE_LENDER",
+            "Preteur" => "ROLE_BORROWER",        
+        );
+    }
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
     }
 
     public function setPassword(string $password): self
@@ -93,18 +117,60 @@ class User
 
         return $this;
     }
+// HERE
+public function getNom(): ?string
+{
+    return $this->nom;
+}
 
-    public function getNaissance(): ?\DateTimeInterface
+public function setNom(string $nom): self
+{
+    $this->nom = $nom;
+
+    return $this;
+}
+
+public function getPrenom(): ?string
+{
+    return $this->prenom;
+}
+
+public function setPrenom(string $prenom): self
+{
+    $this->prenom = $prenom;
+
+    return $this;
+}
+
+
+public function getNaissance(): ?\DateTimeInterface
+{
+    return $this->naissance;
+}
+
+public function setNaissance(\DateTimeInterface $naissance): self
+{
+    $this->naissance = $naissance;
+
+    return $this;
+}
+
+
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
     {
-        return $this->naissance;
+        // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
-    public function setNaissance(\DateTimeInterface $naissance): self
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
     {
-        $this->naissance = $naissance;
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
-
- 
 }
