@@ -13,8 +13,8 @@
                 <th> Numéro de série </th>
                 <th> Kit </th>
             </tr>
-
-    		{%for product in listProduct %}
+		{% if Liste is defined %}
+    		{%for product in Liste %}
 			<tr>
                 <td> {{ product.id}} </td>
     			<td>{{ product.nom }}</td>
@@ -22,9 +22,17 @@
     			<td>{{ product.caution }}</td>
                 <td>{{ product.etat }}</td>
                 <td>{{ product.emplacement }}</td>
-                <td>{{ product.num_serie }}</td>
+                <td>{{ product.numSerie }}</td>
                 <td>{{ product.kit }}</td>
 			</tr>    			
-    		{% endfor %}
+			{% endfor %}
+		{%endif%}
     	</table>
+
+		<div> 
+<input type="button" name="home_link" value="Revenir à la page d'accueil" onclick="self.location.href='/'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
+</div>
 {% endblock %}
+
+
+

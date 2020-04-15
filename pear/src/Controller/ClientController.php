@@ -5,31 +5,30 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Lender;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Controller\ArrayList;
+use Doctrine\DBAL\Types\JsonType;
+use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\ArrayType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use App\Repository\UserRepository;
-use App\Controller\ArrayList;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 
 class ClientController extends AbstractController
-{
-  public function home()
-  {
-  	return $this -> render('app/home.html.twig');
-  }
-
-  public function add_user(Request $request)
+{ 
+  public function add_client(Request $request)
   {
     // On crée un objet User
     $user = new User();
@@ -47,7 +46,16 @@ class ClientController extends AbstractController
       ->add('password',    PasswordType::class)
       ->add('naissance', DateType::class)
       ->add('save',      SubmitType::class)
-    ;
+      ->add('roles', CollectionType::class, [
+        'entry_type'   => ChoiceType::class,
+        'entry_options'  => [
+            'choices'  => [
+              $user->getRolesNames()
+            ],
+        ],
+    ]);
+      
+
 
     $form = $formBuilder->getForm();
 
@@ -82,10 +90,12 @@ class ClientController extends AbstractController
        $user -> getNom();
        $user -> getPrenom();
        $user -> getEmail();
+       $user -> getRoles();
       //echo $user -> getNaissance().toString();
 
     }
-  	return $this -> render ('app/list_clients.html.twig', array("listUser" => $listUser));
+    return $this -> render ('app/list_clients.html.twig', 
+    array("listUser" => $listUser));
   }
 
   public function delete_client(Request $request, UserRepository $userRepository)
@@ -118,28 +128,4 @@ class ClientController extends AbstractController
     ));
   } 
   
-  public function connection ( UserRepository $userRepository)
-  {
-
-    $listUser = $userRepository -> findAll();
-
-    foreach ($listUser as $user){
-      $email =  $user -> getEmail();
-      $password = $user -> getPassword();
-      $emailenter = "eee";
-      $passwordenter = "qd";
-
-      
-      //echo $user -> getNaissance().toString();
-      if (strcmp ($email, $emailenter) && strcmp ($password, $passwordenter)){
-
-        // return $this -> render ('app/home.html.twig', array("listUser" => $listUser));
-        // break; 
-      }
-    }
-    
-
-   return $this -> render('app/connection.html.twig');
-  }
-
 }
