@@ -3,9 +3,12 @@ home:
     path: /
     controller: App\Controller\AppController::home
 
-connection:
+#Routes connection
+login:
   path: /login
   controller: App\Controller\SecurityController::login
+
+
 
 #Route des users
 add_client:
