@@ -90,7 +90,8 @@ class ClientController extends AbstractController
        $user -> getNom();
        $user -> getPrenom();
        $user -> getEmail();
-       $user -> getRoles();
+       
+       //$user -> getRoles();
       //echo $user -> getNaissance().toString();
 
     }
