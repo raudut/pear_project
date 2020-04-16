@@ -4,8 +4,8 @@ home:
     controller: App\Controller\AppController::home
 
 connection:
-  path: /conection
-  controller: App\Controller\AppController::connection
+  path: /login
+  controller: App\Controller\SecurityController::login
 
 #Route des users
 add_client:
