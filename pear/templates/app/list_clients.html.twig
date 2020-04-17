@@ -17,7 +17,10 @@
     			<td>{{ user.nom }}</td>
     			<td>{{ user.prenom }}</td>
     			<td>{{ user.email }}</td>
-				<td>{{ user.roles }}</td>
+				{%for roles in user.roles%}
+				<td>{{roles}}</td>
+				{%endfor%}
+				
 			</tr>    			
     		{% endfor %}
     	</table>
