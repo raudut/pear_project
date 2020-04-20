@@ -90,9 +90,11 @@ class ClientController extends AbstractController
        $user -> getNom();
        $user -> getPrenom();
        $user -> getEmail();
+       $listRoles  = $user -> getRoles();
        
-       //$user -> getRoles();
-      //echo $user -> getNaissance().toString();
+      //  foreach ($listRoles as $role){
+      //  $role -> $role ;
+      // }
 
     }
     return $this -> render ('app/list_clients.html.twig', 

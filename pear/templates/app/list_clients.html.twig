@@ -8,17 +8,23 @@
     			<th> Nom </th>
     			<th> Prenom </th>
     			<th> Email </th>
-				<!--<th> Roles </th> -->
+				<th> Roles </th>
             </tr>
 
     		{%for user in listUser %}
+			
 			<tr>
                 <td> {{ user.id}} </td>
     			<td>{{ user.nom }}</td>
     			<td>{{ user.prenom }}</td>
     			<td>{{ user.email }}</td>
+
+				{%for role in user.roles %}
+				<td>{{ role }}</td>
+				{% endfor %}
 				
-			</tr>    			
+			</tr>
+			 			
     		{% endfor %}
     	</table>
 

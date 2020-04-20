@@ -3,7 +3,7 @@ home:
     path: /
     controller: App\Controller\AppController::home
 
-connection:
+login:
   path: /login
   controller: App\Controller\SecurityController::login
 
