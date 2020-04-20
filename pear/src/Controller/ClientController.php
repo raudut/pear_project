@@ -23,8 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-
+use Symfony\Component\Validator\Constraints\Length;
 
 class ClientController extends AbstractController
 { 
@@ -85,16 +84,28 @@ class ClientController extends AbstractController
   public function list_clients( UserRepository $userRepository)
   {
     $listUser = $userRepository -> findAll();
-
+    $listRoles= null;
     foreach ($listUser as $user){
        $user -> getNom();
        $user -> getPrenom();
        $user -> getEmail();
+<<<<<<< HEAD
        $listRoles  = $user -> getRoles();
        
       //  foreach ($listRoles as $role){
       //  $role -> $role ;
       // }
+=======
+      $taille = sizeof($user -> getRoles());
+       for ($i=0; $i< $taille; $i++)
+       {
+         $listRoles[$i] = $user->getRoles()[$i] ;
+         echo $listRoles[$i];
+       }
+     
+       //$user -> getRoles();
+      //echo $user -> getNaissance().toString();
+>>>>>>> master
 
     }
     return $this -> render ('app/list_clients.html.twig', 

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -48,6 +50,16 @@ class User implements UserInterface
      */
     private $prenom;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Borrowing", mappedBy="id_user", orphanRemoval=true)
+     */
+    private $borrowings;
+
+    public function __construct()
+    {
+        $this->borrowings = new ArrayCollection();
+    }
+
 
 
     public function getId(): ?int
@@ -92,8 +104,8 @@ class User implements UserInterface
         $roles = $this->getRoles('security.role_hierarchy'); 
         return array(
             "Administrateur" => "ROLE_ADMIN",
-            "Loueur" => "ROLE_LENDER",
-            "Preteur" => "ROLE_BORROWER",        
+            "Loueur" => "ROLE_BORROWER",
+            "Preteur" => "ROLE_LENDER",        
         );
     }
     public function setRoles(array $roles): self
@@ -173,5 +185,36 @@ public function setNaissance(\DateTimeInterface $naissance): self
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|Borrowing[]
+     */
+    public function getBorrowings(): Collection
+    {
+        return $this->borrowings;
+    }
+
+    public function addBorrowing(Borrowing $borrowing): self
+    {
+        if (!$this->borrowings->contains($borrowing)) {
+            $this->borrowings[] = $borrowing;
+            $borrowing->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBorrowing(Borrowing $borrowing): self
+    {
+        if ($this->borrowings->contains($borrowing)) {
+            $this->borrowings->removeElement($borrowing);
+            // set the owning side to null (unless already changed)
+            if ($borrowing->getIdUser() === $this) {
+                $borrowing->setIdUser(null);
+            }
+        }
+
+        return $this;
     }
 }

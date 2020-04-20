@@ -3,9 +3,15 @@ home:
     path: /
     controller: App\Controller\AppController::home
 
+<<<<<<< HEAD
+=======
+#Routes connection
+>>>>>>> master
 login:
   path: /login
   controller: App\Controller\SecurityController::login
+
+
 
 #Route des users
 add_client:
@@ -43,4 +49,15 @@ list_products:
 delete_products:
   path: /delete-products
   controller: App\Controller\AppController::delete_products
+
+
+# Routes pour les emprunts
+
+add_borrowing:
+  path: /add-borrowing
+  controller: App\Controller\BorrowingController::add_borrowing
+
+list_borrowings:
+  path: /list-borrowings
+  controller: App\Controller\BorrowingController::list_borrowings
 

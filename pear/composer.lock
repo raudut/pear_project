@@ -4,7 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5079795e18c7dbd9afa1c7c2eff35635",
+
+    "content-hash": "249a957beeeaa8d36a9d383c4a3bdc97",
+
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2657,6 +2659,7 @@
             ],
             "description": "Symfony ErrorHandler Component",
             "homepage": "https://symfony.com",
+=
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -2671,6 +2674,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2020-03-30T14:14:32+00:00"
         },
         {
@@ -2741,20 +2745,6 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-27T16:56:45+00:00"
         },
         {
@@ -3476,6 +3466,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
+
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -3490,6 +3481,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2020-03-30T14:14:32+00:00"
         },
         {
@@ -3586,6 +3578,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
+
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -3600,6 +3593,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2020-03-30T15:04:59+00:00"
         },
         {
@@ -3657,20 +3651,6 @@
                 "string",
                 "symfony",
                 "words"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-03-27T16:56:45+00:00"
         },
@@ -3904,6 +3884,7 @@
                 "mime",
                 "mime-type"
             ],
+
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -3918,6 +3899,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2020-03-27T16:56:45+00:00"
         },
         {
@@ -4787,6 +4769,7 @@
                 "property path",
                 "reflection"
             ],
+
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -4801,6 +4784,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2020-03-27T16:56:45+00:00"
         },
         {
@@ -5123,6 +5107,7 @@
             ],
             "description": "Symfony Security Component - Core Library",
             "homepage": "https://symfony.com",
+
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -5137,6 +5122,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2020-03-30T14:14:32+00:00"
         },
         {
@@ -5329,6 +5315,7 @@
             ],
             "description": "Symfony Security Component - HTTP Integration",
             "homepage": "https://symfony.com",
+
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -6245,6 +6232,7 @@
                 "debug",
                 "dump"
             ],
+
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -7261,6 +7249,7 @@
                 "scaffold",
                 "scaffolding"
             ],
+
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -7275,6 +7264,7 @@
                     "type": "tidelift"
                 }
             ],
+
             "time": "2020-04-05T10:50:59+00:00"
         },
         {

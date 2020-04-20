@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,6 +52,16 @@ class Product
      * @ORM\Column(type="string", length=255)
      */
     private $kit;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Borrowing", mappedBy="id_product", orphanRemoval=true)
+     */
+    private $borrowings;
+
+    public function __construct()
+    {
+        $this->borrowings = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -137,6 +149,43 @@ class Product
     public function setKit(string $kit): self
     {
         $this->kit = $kit;
+
+        return $this;
+    }
+
+
+    public function __toString()
+        {
+            return $this->nom;
+        }
+
+    /**
+     * @return Collection|Borrowing[]
+     */
+    public function getBorrowings(): Collection
+    {
+        return $this->borrowings;
+    }
+
+    public function addBorrowing(Borrowing $borrowing): self
+    {
+        if (!$this->borrowings->contains($borrowing)) {
+            $this->borrowings[] = $borrowing;
+            $borrowing->setIdProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBorrowing(Borrowing $borrowing): self
+    {
+        if ($this->borrowings->contains($borrowing)) {
+            $this->borrowings->removeElement($borrowing);
+            // set the owning side to null (unless already changed)
+            if ($borrowing->getIdProduct() === $this) {
+                $borrowing->setIdProduct(null);
+            }
+        }
 
         return $this;
     }
