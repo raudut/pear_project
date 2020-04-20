@@ -4,14 +4,12 @@
     {% block body %}
     	<table>
             <tr>
-                <th> Id du préteur </th>
-    			<th> Id du user associé</th>
+    			<th> Utilisateur : </th>
 
             </tr>
 
     		{%for lender in listLender %}
 			<tr>
-                <td> {{ lender.id}} </td>
     			<td>{{ lender.iduser }}</td> 
 			</tr>    			
     		{% endfor %}

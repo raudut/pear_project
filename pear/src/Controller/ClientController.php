@@ -24,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ClientController extends AbstractController
 { 
@@ -111,7 +112,10 @@ class ClientController extends AbstractController
 
     $formBuilder = $this->get('form.factory')->createBuilder(FormType::class);
 
-    $formBuilder      ->add('id', IntegerType::class)
+    $formBuilder      ->add('id', EntityType::class, [
+                'class' => User::class,
+                'placeholder' => '== Choisir un client ==',
+            ]) 
                       ->add('save', SubmitType::class);
 
     $form = $formBuilder -> getForm();

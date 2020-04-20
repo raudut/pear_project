@@ -4,7 +4,6 @@
     {% block body %}
     	<table>
             <tr>
-                <th> Id </th>
     			<th> Nom </th>
     			<th> Prix </th>
     			<th> Caution </th>
@@ -16,7 +15,6 @@
 		{% if Liste is defined %}
     		{%for product in Liste %}
 			<tr>
-                <td> {{ product.id}} </td>
     			<td>{{ product.nom }}</td>
     			<td>{{ product.prix }}</td>
     			<td>{{ product.caution }}</td>
