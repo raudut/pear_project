@@ -2,30 +2,45 @@
  {% block title %}Liste des clients{% endblock %}
  
     {% block body %}
-    	<table>
-            <tr>
-    			<th> Nom </th>
-    			<th> Prenom </th>
-    			<th> Email </th>
-                <th> Date de naissance </th>
-				<th> Roles </th>
-            </tr>
-
-    		{%for user in listUser %}
-			<tr>
+    
+		<table class="table table-hover">
+			<thead>
+			  <tr>
+				<th scope="col">Id</th>
+				<th scope="col">Nom</th>
+				<th scope="col">Prénom</th>
+				<th scope="col">Email</th>
+				<th scope="col">Date de naissance</th>
+				<th scope="col">Rôle</th>
+			  </tr>
+			</thead>
+			<tbody>
+				{%for user in listUser %}
+			  <tr>
+				<td>{{ user.id}} </td>
     			<td>{{ user.nom }}</td>
     			<td>{{ user.prenom }}</td>
-    			<td>{{ user.email }}</td>
-                <td>{{ user.naissance|date('Y-m-d') }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.naissance | date('d/m/Y')}}</td>
+				
 				{%for roles in user.roles%}
 				<td>{{roles}}</td>
 				{%endfor%}
-				
-			</tr>    			
-    		{% endfor %}
-    	</table>
-
-<div> 
-<input type="button" name="home_link" value="Revenir à la page d'accueil" onclick="self.location.href='/'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
-</div>
+				<td>
+				<div class="btn-group btn-group-toggle" data-toggle="buttons">
+					<label class="btn btn-primary">
+					  <input type="checkbox" checked="" onclick="" autocomplete="off"> Details
+					</label>
+					<label class="btn btn-primary">
+					  <input type="checkbox" onclick="" autocomplete="off"> Supprimer
+					</label>
+					<label class="btn btn-primary">
+					  <input type="checkbox" onclick="" autocomplete="off"> Modifier
+					</label>
+				  </div>
+				</td>
+			  </tr>
+			  {% endfor %}
+			</tbody>
+		  </table> 
 {% endblock %}

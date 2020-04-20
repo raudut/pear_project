@@ -90,15 +90,7 @@ class ClientController extends AbstractController
        $user -> getNom();
        $user -> getPrenom();
        $user -> getEmail();
-      $taille = sizeof($user -> getRoles());
-       for ($i=0; $i< $taille; $i++)
-       {
-         $listRoles[$i] = $user->getRoles()[$i] ;
-         echo $listRoles[$i];
-       }
      
-       //$user -> getRoles();
-      //echo $user -> getNaissance().toString();
 
     }
     return $this -> render ('app/list_clients.html.twig', 
@@ -124,7 +116,7 @@ class ClientController extends AbstractController
  
     if ($form->isSubmitted() && $form->isValid()) {
       $id = $form -> getdata();
-     $user = $userRepository -> find($id);
+      $user = $userRepository -> find($id);
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->remove($user);
       $entityManager->flush();
