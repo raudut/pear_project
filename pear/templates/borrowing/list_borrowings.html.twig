@@ -14,10 +14,10 @@
     		{%for bo in listBorrowing %}
 			<tr>
                 <td> {{ bo.id}} </td>
-    			<td>{{ bo.id_user }}</td>
-    			<td>{{ bo.id_product }}</td>
-    			<td>{{ bo.dateDebut }}</td>
-                <td>{{ bo.dateFin }}</td>
+                <td>{{ bo.idUser }}</td>
+    			<td>{{ bo.idProduct }}</td>
+    			<td>{{ bo.dateDebut|date('Y-m-d') }}</td>
+                <td>{{ bo.dateFin|date('Y-m-d') }}</td>
 				
 			</tr>    			
     		{% endfor %}

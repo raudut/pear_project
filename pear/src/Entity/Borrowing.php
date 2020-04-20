@@ -30,13 +30,13 @@ class Borrowing
      * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="borrowings")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $id_product;
+    private $idProduct;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="borrowings")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $id_user;
+    private $idUser;
 
 
     public function getId(): ?int
@@ -72,24 +72,24 @@ class Borrowing
 
     public function getIdProduct(): ?Product
     {
-        return $this->id_product;
+        return $this->idProduct;
     }
 
-    public function setIdProduct(?Product $id_product): self
+    public function setIdProduct(?Product $idProduct): self
     {
-        $this->id_product = $id_product;
+        $this->idProduct = $idProduct;
 
         return $this;
     }
 
     public function getIdUser(): ?User
     {
-        return $this->id_user;
+        return $this->idUser;
     }
 
-    public function setIdUser(?User $id_user): self
+    public function setIdUser(?User $idUser): self
     {
-        $this->id_user = $id_user;
+        $this->idUser = $idUser;
 
         return $this;
     }
