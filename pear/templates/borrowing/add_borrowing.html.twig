@@ -11,7 +11,7 @@
 
     <h1>Formulaire d'emprunt</h1>
 
-    <div>Bonjour {{app.user.username}} ! Que souhaitez-vous emprunter ?</div>
+    <div>Bonjour  {{app.user.username}}! Que souhaitez-vous emprunter ?</div>  
 
   <div class="well">
   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
@@ -59,9 +59,5 @@
   {# Fermeture de la balise <form> du formulaire HTML #}
   {{ form_end(form) }}
 </div> 
-
-<div> 
-<input type="button" name="home_link" value="Revenir à la page d'accueil" onclick="self.location.href='/'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
-</div>
 
 {% endblock %}
