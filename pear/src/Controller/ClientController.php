@@ -4,35 +4,34 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Lender;
+use App\Controller\ArrayList;
+use Doctrine\DBAL\Types\JsonType;
+use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\ArrayType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use App\Repository\UserRepository;
-use App\Controller\ArrayList;
-
-
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ClientController extends AbstractController
-{
-  public function home()
-  {
-  	return $this -> render('app/home.html.twig');
-  }
-
-  public function add_user(Request $request)
+{ 
+  public function add_client(Request $request)
   {
     // On crée un objet User
     $user = new User();
-
 
     $entityManager = $this->getDoctrine()->getManager();
 
@@ -47,7 +46,15 @@ class ClientController extends AbstractController
       ->add('password',    PasswordType::class)
       ->add('naissance', DateType::class)
       ->add('save',      SubmitType::class)
-    ;
+      ->add('roles', CollectionType::class, [
+        'entry_type'   => ChoiceType::class,
+        'entry_options'  => [
+            'choices'  => [
+              $user->getRolesNames()
+            ],
+        ],
+    ]);
+      
 
 
     $form = $formBuilder->getForm();
@@ -55,7 +62,7 @@ class ClientController extends AbstractController
 
      $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-        $task = $form->getData();
+        $user = $form->getData();
         
         $entityManager->persist($user);
         $entityManager->flush();
@@ -77,18 +84,50 @@ class ClientController extends AbstractController
 
   public function list_clients( UserRepository $userRepository)
   {
-
-    
-
     $listUser = $userRepository -> findAll();
-
+    $listRoles= null;
     foreach ($listUser as $user){
-      $user -> getNom();
-      $user -> getPrenom();
-      $user -> getEmail();
-      //echo $user -> getNaissance().toString();
+       $user -> getNom();
+       $user -> getPrenom();
+       $user -> getEmail();
+     
 
     }
-  	return $this -> render ('app/list_clients.html.twig', array("listUser" => $listUser));
+    return $this -> render ('app/list_clients.html.twig', 
+    array("listUser" => $listUser));
   }
+
+  public function delete_client(Request $request, UserRepository $userRepository)
+  {
+   
+    $user = new User();
+
+    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class);
+
+    $formBuilder      ->add('id', EntityType::class, [
+                'class' => User::class,
+                'placeholder' => '== Choisir un client ==',
+            ]) 
+                      ->add('save', SubmitType::class);
+
+    $form = $formBuilder -> getForm();
+    
+    $form->handleRequest($request);
+ 
+    if ($form->isSubmitted() && $form->isValid()) {
+      $id = $form -> getdata();
+      $user = $userRepository -> find($id);
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->remove($user);
+      $entityManager->flush();
+
+      $listUser = $userRepository -> findAll();
+      return $this -> render ('app/list_clients.html.twig', array("listUser" => $listUser));
+    }
+
+    return $this->render('app/delete_user.html.twig', array(
+      'form' => $form->createView(),
+    ));
+  } 
+  
 }

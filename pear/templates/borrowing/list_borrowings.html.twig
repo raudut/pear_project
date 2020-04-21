@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+ {% block title %}Liste des emprunts{% endblock %}
+ 
+    {% block body %}
+    	<table>
+            <tr>
+                <th> Id </th>
+    			<th> User </th>
+    			<th> Produit </th>
+    			<th> Date de début </th>
+				<th> Date de fin </th>
+            </tr>
+
+    		{%for bo in listBorrowing %}
+			<tr>
+                <td> {{ bo.id}} </td>
+                <td>{{ bo.idUser }}</td>
+    			<td>{{ bo.idProduct }}</td>
+    			<td>{{ bo.dateDebut|date('Y-m-d') }}</td>
+                <td>{{ bo.dateFin|date('Y-m-d') }}</td>
+				
+			</tr>    			
+    		{% endfor %}
+    	</table>
+
+{% endblock %}

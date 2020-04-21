@@ -3,15 +3,41 @@
 	{% block title %}Bienvenue sur Pear!{% endblock %}
 
 	{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+		<style>
+			.example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+			.example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+		</style>
 
-	<h1> Bienvenue sur Pear! </h1>
-	<div>
-<p> Pear est un site de prêt gestion de prêt de materiel. Pour l'utiliser vous devez d'abord créer un compte</p>
-<input type="button" name="add_client_link" value="S'enregistrer" onclick="self.location.href='/ajouter-utilisateur'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
-	</div>
+			<h1> Bienvenue sur Pear! </h1>
+
+		<div>
+			<p> Pear est un site de prêt gestion de prêt de materiel. Pour l'utiliser vous devez d'abord créer un compte</p>
+
+		<div>
+			<button type="button" class="btn btn-outline-primary" onclick="self.location.href='/login'">Connexion</button>
+		</div>
+
+		<div>
+			<h4>Client</h4>
+			<button type="button" class="btn btn-outline-primary" onclick="self.location.href='/add-client'">Inscription</button>
+			<button type="button" class="btn btn-outline-primary" onclick="self.location.href='/list-clients'">Liste des clients</button>
+			<button type="button" class="btn btn-outline-primary" onclick="self.location.href='/delete-client'">Supprimer un client</button>
+		</div>
+
+		<div>
+			<h4>Preteur</h4>
+			<button type="button" class="btn btn-outline-primary" onclick="self.location.href='/add-lender'">Utilisateur -> Preteur</button>
+			<button type="button" class="btn btn-outline-primary" onclick="self.location.href='/lis-lenders'">Liste des preteurs</button>
+		</div>
+
+		<div>
+			<h4>Produit<h4>
+			<button type="button" class="btn btn-outline-primary" onclick="self.location.href='/add-product'">Ajouter un objet</button>
+			<button type="button" class="btn btn-outline-primary" onclick="self.location.href='/list-products'">Lister les objets</button>
+			<button type="button" class="btn btn-outline-primary" onclick="self.location.href='/delete-products'">Supprimer un objet</button>
+		</div>
+
+	
+		</div>
 
 	{% endblock %}

@@ -1,11 +1,60 @@
+#Route de l'appli
 home:
     path: /
-    controller: App\Controller\ClientController::home
-add_user:
-    path: /ajouter-utilisateur
-    controller: App\Controller\ClientController::add_user
+    controller: App\Controller\AppController::home
+
+#Routes connection
+login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+
+
+
+#Route des users
+add_client:
+    path: /add-client
+    controller: App\Controller\ClientController::add_client
 
 list_clients:
-  path: /list_clients
+  path: /list-clients
   controller: App\Controller\ClientController::list_clients
+
+
+delete_clients:
+  path: /delete-client
+  controller: App\Controller\ClientController::delete_client
+
+
+#Route des preteurs
+add_lender:
+   path: /add-lender
+   controller: App\Controller\LenderController::add_lender
+
+list_lenders:
+  path: /list-lenders
+  controller: App\Controller\LenderController::list_lenders
+
+
+add_product:
+  path: /add-product
+  controller: App\Controller\AppController::add_product
+
+list_products:
+  path: /list-products
+  controller: App\Controller\AppController::list_products
+
+delete_products:
+  path: /delete-products
+  controller: App\Controller\AppController::delete_products
+
+
+# Routes pour les emprunts
+
+add_borrowing:
+  path: /add-borrowing
+  controller: App\Controller\BorrowingController::add_borrowing
+
+list_borrowings:
+  path: /list-borrowings
+  controller: App\Controller\BorrowingController::list_borrowings
 
