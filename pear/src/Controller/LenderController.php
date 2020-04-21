@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Lender;
+use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Repository\LenderRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class LenderController extends AbstractController
 {
@@ -34,7 +36,10 @@ class LenderController extends AbstractController
   
       // On ajoute les champs de l'entité que l'on veut à notre formulaire
       $formBuilder
-        ->add('iduser',  IntegerType::class)
+        ->add('iduser', EntityType::class, [
+                'class' => User::class,
+                'placeholder' => '== Choisir un client ==',
+            ]) 
         ->add('save',  SubmitType::class)
         ;
 

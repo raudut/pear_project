@@ -24,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ClientController extends AbstractController
 { 
@@ -89,16 +90,7 @@ class ClientController extends AbstractController
        $user -> getNom();
        $user -> getPrenom();
        $user -> getEmail();
-       $taille = sizeof($user -> getRoles());
-       for ($i=0; $i< $taille; $i++)
-       {
-         $listRoles[$i] = $user->getRoles()[$i] ;
-         echo $listRoles[$i];
-       }
      
-       //$user -> getRoles();
-      //echo $user -> getNaissance().toString();
-
     }
     return $this -> render ('app/list_clients.html.twig', 
     array("listUser" => $listUser));
@@ -111,7 +103,10 @@ class ClientController extends AbstractController
 
     $formBuilder = $this->get('form.factory')->createBuilder(FormType::class);
 
-    $formBuilder      ->add('id', IntegerType::class)
+    $formBuilder      ->add('id', EntityType::class, [
+                'class' => User::class,
+                'placeholder' => '== Choisir un client ==',
+            ]) 
                       ->add('save', SubmitType::class);
 
     $form = $formBuilder -> getForm();
@@ -120,7 +115,7 @@ class ClientController extends AbstractController
  
     if ($form->isSubmitted() && $form->isValid()) {
       $id = $form -> getdata();
-     $user = $userRepository -> find($id);
+      $user = $userRepository -> find($id);
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->remove($user);
       $entityManager->flush();

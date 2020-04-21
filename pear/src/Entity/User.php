@@ -55,6 +55,11 @@ class User implements UserInterface
      */
     private $borrowings;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Lender", mappedBy="iduser", cascade={"persist", "remove"})
+     */
+    private $lender;
+
     public function __construct()
     {
         $this->borrowings = new ArrayCollection();
@@ -168,6 +173,11 @@ public function setNaissance(\DateTimeInterface $naissance): self
     return $this;
 }
 
+public function __toString()
+        {
+            return $this->prenom . ' ' . $this->nom;
+        }
+
 
 
     /**
@@ -213,6 +223,23 @@ public function setNaissance(\DateTimeInterface $naissance): self
             if ($borrowing->getIdUser() === $this) {
                 $borrowing->setIdUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getLender(): ?Lender
+    {
+        return $this->lender;
+    }
+
+    public function setLender(Lender $lender): self
+    {
+        $this->lender = $lender;
+
+        // set the owning side of the relation if necessary
+        if ($lender->getIduser() !== $this) {
+            $lender->setIduser($this);
         }
 
         return $this;

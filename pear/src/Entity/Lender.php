@@ -17,24 +17,29 @@ class Lender
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="lender", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $iduser;
+
+    
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIduser(): ?int
+    public function getIduser(): ?User
     {
         return $this->iduser;
     }
 
-    public function setIduser(int $iduser): self
+    public function setIduser(User $iduser): self
     {
         $this->iduser = $iduser;
 
         return $this;
     }
+
+    
 }

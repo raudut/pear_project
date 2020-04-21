@@ -44,7 +44,7 @@ class BorrowingController extends AbstractController
       ->add('dateDebut', DateType::class)
       ->add('dateFin', DateType::class)
       ->add('save',      SubmitType::class)
-      ->add('id_product', EntityType::class, [
+      ->add('idProduct', EntityType::class, [
                 'class' => Product::class,
                 'placeholder' => '== Choisir un objet ==',
             ]) 
@@ -58,13 +58,8 @@ class BorrowingController extends AbstractController
 
      $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-        
-        $task = $form->getData();
-        
-        //$borrowing = $this->get('security.token_storage')->getToken()->getUser()->getId();
-        $borrowing = $this->getUser();
-        
-
+        $borrowing = $form->getData();
+        $borrowing->setIdUser($this->getUser());
         $entityManager->persist($borrowing);
         $entityManager->flush();
         

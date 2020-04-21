@@ -4,19 +4,15 @@
     {% block body %}
     	<table>
             <tr>
-                <th> Id du préteur </th>
-    			<th> Id du user associé</th>
+    			<th> Utilisateur : </th>
 
             </tr>
 
     		{%for lender in listLender %}
 			<tr>
-                <td> {{ lender.id}} </td>
     			<td>{{ lender.iduser }}</td> 
 			</tr>    			
     		{% endfor %}
     	</table>
-		<div> 
-<input type="button" name="home_link" value="Revenir à la page d'accueil" onclick="self.location.href='/'" style="background-color:#3cb371" style="color:white; font-weight:bold"onclick> 
-</div>
+	
 {% endblock %}
