@@ -3,10 +3,6 @@ home:
     path: /
     controller: App\Controller\AppController::home
 
-<<<<<<< HEAD
-=======
-#Routes connection
->>>>>>> master
 login:
   path: /login
   controller: App\Controller\SecurityController::login
@@ -38,6 +34,7 @@ list_lenders:
   controller: App\Controller\LenderController::list_lenders
 
 
+#Route product
 add_product:
   path: /add-product
   controller: App\Controller\AppController::add_product

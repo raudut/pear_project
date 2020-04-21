@@ -89,14 +89,7 @@ class ClientController extends AbstractController
        $user -> getNom();
        $user -> getPrenom();
        $user -> getEmail();
-<<<<<<< HEAD
-       $listRoles  = $user -> getRoles();
-       
-      //  foreach ($listRoles as $role){
-      //  $role -> $role ;
-      // }
-=======
-      $taille = sizeof($user -> getRoles());
+       $taille = sizeof($user -> getRoles());
        for ($i=0; $i< $taille; $i++)
        {
          $listRoles[$i] = $user->getRoles()[$i] ;
@@ -105,7 +98,6 @@ class ClientController extends AbstractController
      
        //$user -> getRoles();
       //echo $user -> getNaissance().toString();
->>>>>>> master
 
     }
     return $this -> render ('app/list_clients.html.twig', 
