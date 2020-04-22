@@ -77,7 +77,7 @@ class ClientController extends AbstractController
     // On passe la méthode createView() du formulaire à la vue
     // afin qu'elle puisse afficher le formulaire toute seule
 
-    return $this->render('app/add_user.html.twig', array(
+    return $this->render('user/add_user.html.twig', array(
       'form' => $form->createView(),
     ));
   }
@@ -92,7 +92,7 @@ class ClientController extends AbstractController
        $user -> getEmail();
      
     }
-    return $this -> render ('app/list_clients.html.twig', 
+    return $this -> render ('user/list_users.html.twig', 
     array("listUser" => $listUser));
   }
 
@@ -121,10 +121,10 @@ class ClientController extends AbstractController
       $entityManager->flush();
 
       $listUser = $userRepository -> findAll();
-      return $this -> render ('app/list_clients.html.twig', array("listUser" => $listUser));
+      return $this -> render ('user/list_clients.html.twig', array("listUser" => $listUser));
     }
 
-    return $this->render('app/delete_user.html.twig', array(
+    return $this->render('user/delete_user.html.twig', array(
       'form' => $form->createView(),
     ));
   } 

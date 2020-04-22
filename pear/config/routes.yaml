@@ -37,15 +37,15 @@ list_lenders:
 #Route product
 add_product:
   path: /add-product
-  controller: App\Controller\AppController::add_product
+  controller: App\Controller\ProductController::add_product
 
 list_products:
   path: /list-products
-  controller: App\Controller\AppController::list_products
+  controller: App\Controller\ProductController::list_products
 
 delete_products:
   path: /delete-products
-  controller: App\Controller\AppController::delete_products
+  controller: App\Controller\ProductController::delete_products
 
 
 # Routes pour les emprunts
