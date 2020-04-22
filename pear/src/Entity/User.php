@@ -51,7 +51,7 @@ class User implements UserInterface
     private $prenom;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Borrowing", mappedBy="id_user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Borrowing", mappedBy="idUser", orphanRemoval=true)
      */
     private $borrowings;
 
@@ -101,7 +101,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_BORROWER';
+        $roles[] = 'ROLE_LENDER';
 
         return array_unique($roles);
     }
