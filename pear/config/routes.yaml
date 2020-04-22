@@ -44,7 +44,7 @@ list_products:
   controller: App\Controller\ProductController::list_products
 
 delete_product:
-  path: /delete-products
+  path: /delete-product/{id}
   controller: App\Controller\ProductController::delete_products
 
 

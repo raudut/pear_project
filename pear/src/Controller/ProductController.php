@@ -121,34 +121,18 @@ class ProductController extends AbstractController
 
   
     
-  public function delete_products(Request $request, ProductRepository $productRepository)
+  public function delete_products(Request $request, ProductRepository $productRepository, $id)
   {
    
-    $product = new Product();
+    $product = $productRepository -> findOneById($id);
 
-    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class);
-
-    $formBuilder      ->add('id', IntegerType::class)
-                      ->add('save', SubmitType::class);
-
-    $form = $formBuilder -> getForm();
-    
-    $form->handleRequest($request);
- 
-    if ($form->isSubmitted() && $form->isValid()) {
-      $id = $form -> getdata();
-      $product = $productRepository -> find($id);
       $entityManager = $this->getDoctrine()->getManager();
+      
       $entityManager->remove($product);
       $entityManager->flush();
 
       $listProducts = $productRepository -> findAll();
-      return $this -> redirectToRoute ('list_products'); //, array("liste" => $listProducts)
-    }
-
-    return $this->render('product/delete_products.html.twig', array(
-      'form' => $form->createView(),
-    ));
-  } 
+      return $this -> render ('product/list_products.html.twig', array("Liste" => $listProducts));
+  }
 
 }

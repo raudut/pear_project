@@ -54,7 +54,7 @@ class Product
     private $kit;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Borrowing", mappedBy="id_product", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Borrowing", mappedBy="idProduct", orphanRemoval=true)
      */
     private $borrowings;
 
