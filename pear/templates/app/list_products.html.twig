@@ -11,6 +11,7 @@
                 <th> Emplacement </th>
                 <th> Numéro de série </th>
                 <th> Kit </th>
+                <th> Statut </th>
             </tr>
 		{% if Liste is defined %}
     		{%for product in Liste %}
@@ -22,6 +23,10 @@
                 <td>{{ product.emplacement }}</td>
                 <td>{{ product.numSerie }}</td>
                 <td>{{ product.kit }}</td>
+                {%for statut in product.statut%}
+                <td>{{ statut }} </td>
+                {%endfor%}
+                
 			</tr>    			
 			{% endfor %}
 		{%endif%}

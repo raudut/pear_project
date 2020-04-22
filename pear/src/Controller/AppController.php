@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Product;
+use Doctrine\DBAL\Types\JsonType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\UserRepository;
 use App\Repository\ProductRepository;
@@ -18,12 +19,16 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
-
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-
-
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use App\Controller\ArrayList;
+use Doctrine\DBAL\Types\ArrayType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class AppController extends AbstractController
 {
@@ -55,8 +60,16 @@ class AppController extends AbstractController
       ->add('num_serie',    TextType::class)
       ->add('kit',    TextType::class)
       ->add('save',      SubmitType::class)
-    ;
-    // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
+      ->add('statut', CollectionType::class, [
+        'entry_type'   => ChoiceType::class,
+        'entry_options'  => [
+            'choices'  => [
+              $product->getStatutNames()
+            ],
+        ],
+        
+    ]);
+    // Pour l'instant, pas de catégories, etc., on les gérera plus tard
 
     // À partir du formBuilder, on génère le formulaire
     $form = $formBuilder->getForm();
@@ -95,6 +108,7 @@ class AppController extends AbstractController
        $product -> getEmplacement();
        $product -> getNumSerie();
        $product -> getKit();
+       $product -> getStatut();
 
     }
     return $this -> render ('app/list_products.html.twig', array("listProduct" => $listProduct));
@@ -153,7 +167,10 @@ class AppController extends AbstractController
 
     $formBuilder = $this->get('form.factory')->createBuilder(FormType::class);
 
-    $formBuilder      ->add('id', IntegerType::class)
+    $formBuilder      ->add('id', EntityType::class, [
+                'class' => Product::class,
+                'placeholder' => '== Choisir un objet ==',
+            ]) 
                       ->add('save', SubmitType::class);
 
     $form = $formBuilder -> getForm();
