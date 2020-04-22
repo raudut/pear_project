@@ -58,3 +58,6 @@ list_borrowings:
   path: /list-borrowings
   controller: App\Controller\BorrowingController::list_borrowings
 
+delete_borrowing:
+  path: /delete-borrowing/{id}
+  controller: App\Controller\BorrowingController::delete_borrowing
