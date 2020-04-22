@@ -6,6 +6,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Lender;
 use App\Controller\ArrayList;
+use App\Repository\BorrowingRepository;
+use App\Repository\LenderRepository;
 use Doctrine\DBAL\Types\JsonType;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\ArrayType;
@@ -101,48 +103,33 @@ class ClientController extends AbstractController
   public function list_clients( UserRepository $userRepository)
   {
     $listUser = $userRepository -> findAll();
-    $listRoles= null;
     foreach ($listUser as $user){
        $user -> getNom();
        $user -> getPrenom();
        $user -> getEmail();
+       $user -> getNaissance();
      
     }
     return $this -> render ('user/list_users.html.twig', 
     array("listUser" => $listUser));
   }
 
-  public function delete_client(Request $request, UserRepository $userRepository)
+  public function delete_client(UserRepository $userRepository , LenderRepository $lenderRepository, $id)
   {
-   
-    $user = new User();
-
-    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class);
-
-    $formBuilder      ->add('id', EntityType::class, [
-                'class' => User::class,
-                'placeholder' => '== Choisir un client ==',
-            ]) 
-                      ->add('save', SubmitType::class);
-
-    $form = $formBuilder -> getForm();
     
-    $form->handleRequest($request);
- 
-    if ($form->isSubmitted() && $form->isValid()) {
-      $id = $form -> getdata();
-      $user = $userRepository -> find($id);
+      $user = $userRepository -> findOneById($id);
+      $lender = $lenderRepository -> findOneByIduser($id);
+
       $entityManager = $this->getDoctrine()->getManager();
+      if(!is_null($lender)) {$entityManager->remove($lender);}
+      
       $entityManager->remove($user);
       $entityManager->flush();
 
       $listUser = $userRepository -> findAll();
-      return $this -> render ('user/list_clients.html.twig', array("listUser" => $listUser));
+      return $this -> render ('user/list_users.html.twig', array("listUser" => $listUser));
     }
 
-    return $this->render('user/delete_user.html.twig', array(
-      'form' => $form->createView(),
-    ));
-  } 
+    
   
 }
