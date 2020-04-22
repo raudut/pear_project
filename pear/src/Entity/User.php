@@ -51,7 +51,7 @@ class User implements UserInterface
     private $prenom;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Borrowing", mappedBy="id_user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Borrowing", mappedBy="idUser", orphanRemoval=true)
      */
     private $borrowings;
 

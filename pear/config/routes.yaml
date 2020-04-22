@@ -19,8 +19,8 @@ list_clients:
   controller: App\Controller\ClientController::list_clients
 
 
-delete_clients:
-  path: /delete-client
+delete_client:
+  path: /delete-client/{id}
   controller: App\Controller\ClientController::delete_client
 
 
@@ -43,7 +43,7 @@ list_products:
   path: /list-products
   controller: App\Controller\ProductController::list_products
 
-delete_products:
+delete_product:
   path: /delete-products
   controller: App\Controller\ProductController::delete_products
 
