@@ -98,14 +98,16 @@ class ClientController extends AbstractController
     array("listUser" => $listUser));
   }
 
-  public function delete_client(UserRepository $userRepository , LenderRepository $lenderRepository, $id)
+  public function delete_client(UserRepository $userRepository , LenderRepository $lenderRepository, BorrowingRepository $borrowingRepository, $id)
   {
     
       $user = $userRepository -> findOneById($id);
       $lender = $lenderRepository -> findOneByIduser($id);
+      $borrowing = $borrowingRepository -> findOneByidUser($id);
 
       $entityManager = $this->getDoctrine()->getManager();
       if(!is_null($lender)) {$entityManager->remove($lender);}
+      if(!is_null($borrowing)) {$entityManager->remove($borrowing);}
       
       $entityManager->remove($user);
       $entityManager->flush();
