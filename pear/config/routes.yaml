@@ -3,7 +3,6 @@ home:
     path: /
     controller: App\Controller\AppController::home
 
-#Routes connection
 login:
   path: /login
   controller: App\Controller\SecurityController::login
@@ -20,8 +19,8 @@ list_clients:
   controller: App\Controller\ClientController::list_clients
 
 
-delete_clients:
-  path: /delete-client
+delete_client:
+  path: /delete-client/{id}
   controller: App\Controller\ClientController::delete_client
 
 
@@ -35,17 +34,18 @@ list_lenders:
   controller: App\Controller\LenderController::list_lenders
 
 
+#Route product
 add_product:
   path: /add-product
-  controller: App\Controller\AppController::add_product
+  controller: App\Controller\ProductController::add_product
 
 list_products:
   path: /list-products
-  controller: App\Controller\AppController::list_products
+  controller: App\Controller\ProductController::list_products
 
-delete_products:
-  path: /delete-products
-  controller: App\Controller\AppController::delete_products
+delete_product:
+  path: /delete-product/{id}
+  controller: App\Controller\ProductController::delete_products
 
 
 # Routes pour les emprunts
@@ -58,3 +58,6 @@ list_borrowings:
   path: /list-borrowings
   controller: App\Controller\BorrowingController::list_borrowings
 
+delete_borrowing:
+  path: /delete-borrowing/{id}
+  controller: App\Controller\BorrowingController::delete_borrowing

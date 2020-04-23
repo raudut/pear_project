@@ -2,12 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\Borrowing;
+use App\Entity\User;
 use App\Entity\Product;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Borrowing;
+use Doctrine\DBAL\Types\ArrayType;
+use App\Repository\ProductRepository;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use App\Repository\BorrowingRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,11 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use App\Repository\ProductRepository;
-use App\Repository\BorrowingRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BorrowingController extends AbstractController
 {
@@ -45,10 +47,12 @@ class BorrowingController extends AbstractController
       ->add('idProduct', EntityType::class, [
                 'class' => Product::class,
                 'placeholder' => '== Choisir un objet ==',
-            ]) ;
+            ]) 
+      ;
     
       
     $form = $formBuilder->getForm();
+    
 
 
      $form->handleRequest($request);
@@ -57,20 +61,16 @@ class BorrowingController extends AbstractController
         $borrowing->setIdUser($this->getUser());
         $entityManager->persist($borrowing);
         $entityManager->flush();
-
+        
         return $this->redirectToRoute('list_borrowings');
+        echo($borrowing->GetId());
     }
-
-
-    // À partir du formBuilder, on génère le formulaire
     
-
-    // On passe la méthode createView() du formulaire à la vue
-    // afin qu'elle puisse afficher le formulaire toute seule
-
+    echo($this->get('security.token_storage')->getToken()->getUser()->getId());
     return $this->render('borrowing/add_borrowing.html.twig', array(
       'form' => $form->createView(),
     ));
+
     }
 
 
@@ -87,4 +87,18 @@ class BorrowingController extends AbstractController
     return $this -> render ('borrowing/list_borrowings.html.twig', 
     array("listBorrowing" => $listBorrowing));
   }
+
+  public function delete_borrowing(BorrowingRepository $borrowingRepository , $id)
+  {
+    
+      $bo = $borrowingRepository -> findOneById($id);
+
+      $entityManager = $this->getDoctrine()->getManager();
+      
+      $entityManager->remove($bo);
+      $entityManager->flush();
+
+      $listBorrowing = $borrowingRepository -> findAll();
+      return $this -> render ('borrowing/list_borrowings.html.twig', array("listBorrowing" => $listBorrowing));
+    }
 }

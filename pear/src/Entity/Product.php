@@ -54,9 +54,16 @@ class Product
     private $kit;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Borrowing", mappedBy="id_product", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Borrowing", mappedBy="idProduct", orphanRemoval=true)
      */
     private $borrowings;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $statut = [];
+
+    
 
     public function __construct()
     {
@@ -186,6 +193,33 @@ class Product
                 $borrowing->setIdProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    
+
+    public function getStatutNames(){
+        $statut = $this->getStatut('security.statut_hierarchy'); 
+        return array(
+            "Loue" => "STATUT_LOUE",
+            "Indisponible" => "STATUT_INDISPONIBLE",
+            "Disponible" => "STATUT_DISPONIBLE",        
+        );
+    }
+
+    public function getStatut(): array
+    {
+        $statut = $this->statut;
+        // guarantee every user at least has ROLE_USER
+        $statut[] = 'STATUT_INDISPONIBLE';
+
+        return array_unique($statut);
+    }
+
+    public function setStatut(array $statut): self
+    {
+        $this->statut = $statut;
 
         return $this;
     }
