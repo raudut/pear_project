@@ -14,6 +14,17 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
+
+    public function findProductByStatut($statut)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p')
+            ->where('p.statut LIKE :statut')
+            ->setParameter('statut', '%"'.$statut.'"%');
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Product::class);
