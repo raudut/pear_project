@@ -48,7 +48,6 @@ class BorrowingController extends AbstractController
                 'class' => Product::class,
                 'placeholder' => '== Choisir un objet ==',
             ]) 
-      ->add('user_id', EntityType::class , ['class' => User::class])//->getId())
       ;
     
       
@@ -88,4 +87,18 @@ class BorrowingController extends AbstractController
     return $this -> render ('borrowing/list_borrowings.html.twig', 
     array("listBorrowing" => $listBorrowing));
   }
+
+  public function delete_borrowing(BorrowingRepository $borrowingRepository , $id)
+  {
+    
+      $bo = $borrowingRepository -> findOneById($id);
+
+      $entityManager = $this->getDoctrine()->getManager();
+      
+      $entityManager->remove($bo);
+      $entityManager->flush();
+
+      $listBorrowing = $borrowingRepository -> findAll();
+      return $this -> render ('borrowing/list_borrowings.html.twig', array("listBorrowing" => $listBorrowing));
+    }
 }

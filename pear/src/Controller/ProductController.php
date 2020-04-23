@@ -8,6 +8,7 @@ use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\UserRepository;
 use App\Repository\ProductRepository;
+use App\Repository\BorrowingRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -18,7 +19,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
-
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
@@ -52,6 +54,14 @@ class ProductController extends AbstractController
       ->add('num_serie',    TextType::class)
       ->add('kit',    TextType::class)
       ->add('save',      SubmitType::class)
+      ->add('statut', CollectionType::class, [
+        'entry_type'   => ChoiceType::class,
+        'entry_options'  => [
+            'choices'  => [
+              $product->getStatutNames()
+            ],
+        ],
+    ])
     ;
     // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
 
@@ -121,34 +131,19 @@ class ProductController extends AbstractController
 
   
     
-  public function delete_products(Request $request, ProductRepository $productRepository)
+  public function delete_products(ProductRepository $productRepository, BorrowingRepository $borrowingRepository, $id)
   {
    
-    $product = new Product();
+    $product = $productRepository -> findOneById($id);
+    $borrowing = $borrowingRepository -> findOneByidUser($id);
 
-    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class);
-
-    $formBuilder      ->add('id', IntegerType::class)
-                      ->add('save', SubmitType::class);
-
-    $form = $formBuilder -> getForm();
-    
-    $form->handleRequest($request);
- 
-    if ($form->isSubmitted() && $form->isValid()) {
-      $id = $form -> getdata();
-      $product = $productRepository -> find($id);
       $entityManager = $this->getDoctrine()->getManager();
+      if(!is_null($borrowing)) {$entityManager->remove($borrowing);}
       $entityManager->remove($product);
       $entityManager->flush();
 
       $listProducts = $productRepository -> findAll();
-      return $this -> redirectToRoute ('list_products'); //, array("liste" => $listProducts)
-    }
-
-    return $this->render('product/delete_products.html.twig', array(
-      'form' => $form->createView(),
-    ));
-  } 
+      return $this -> render ('product/list_products.html.twig', array("Liste" => $listProducts));
+  }
 
 }

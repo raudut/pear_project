@@ -40,3 +40,4 @@ security:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/lender, roles: ROLE_LENDER }
          - { path: ^/borrower, roles: ROLE_BORROWER }
+
