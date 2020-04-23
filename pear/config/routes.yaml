@@ -47,6 +47,10 @@ delete_product:
   path: /delete-product/{id}
   controller: App\Controller\ProductController::delete_products
 
+qrcode_product:
+  path: /qrcode-product/{id}
+  controller: App\Controller\ProductController::genarateQRcode
+
 
 # Routes pour les emprunts
 

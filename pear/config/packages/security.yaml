@@ -23,8 +23,8 @@ security:
             logout:
                 path: logout
 
-                login_path: /login
-                check_path: /login
+                # login_path: /login
+                # check_path: /login
                 # where to redirect after logout
                 # target: app_any_route
 

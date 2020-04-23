@@ -15,9 +15,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
  class SecurityController extends AbstractController
  {
-//     /**
-//      * @Route("/add-client", name="inscription")
-//      */
+
 //     public function registration(Request $request, ObjectManager $manager)
 //     {
 //      $user = new User();
