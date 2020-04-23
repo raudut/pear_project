@@ -101,7 +101,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_LENDER';
+        $roles[] = 'ROLE_BORROWER';
 
         return array_unique($roles);
     }
