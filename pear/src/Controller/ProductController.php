@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Borrowing;
 use App\Entity\User;
 use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -145,5 +146,33 @@ class ProductController extends AbstractController
       $listProducts = $productRepository -> findAll();
       return $this -> render ('product/list_products.html.twig', array("Liste" => $listProducts));
   }
+
+
+  public function genarateQRcode(Request $request,ProductRepository $productRepository, $id){
+    // On crée un objet Advert
+    $product = $productRepository -> findOneById($id);
+
+    $etat= $product->getEtat();
+    $numSerie=$product->getNumserie();
+    $nom=$product->GetNom();
+    //$borrowing=$product->getBorrowing();
+    
+    $qrcode_message="Lobjet $nom ayant pour numero de serie $numSerie est : Dispo car le site n'est pas en ligne pour le moment pour le moment. Il est en $etat état.";
+    
+    $encodeurl = urlencode($qrcode_message);
+    //echo($encodeurl); 
+    // goqr $url = "https://api.qrserver.com/v1/create-qrcode/?data=$encodeurl&size=100x100";
+    $url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=$encodeurl&choe=UTF-8";
+
+    echo('Hello');
+    echo($url);
+
+
+
+    return $this->render('product/qrcode_product.html.twig', array(
+      'url' => $url,
+    ));
+  }
+
 
 }

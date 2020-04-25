@@ -27,10 +27,26 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Test\FormBuilderInterface;
 
 class ClientController extends AbstractController
 { 
-  public function add_client(Request $request)
+
+  /* public function add_client(FormBuilderInterface $builder, array $options ){
+
+
+    $builder
+      ->add('nom'    )
+      ->add('prenom')   
+      ->add('email')      
+      ->add('password', PasswordType::class)
+      ->add('naissance', DateType::class)
+      ;
+     
+      
+  }}*/
+
+ public function add_client(Request $request)
   {
     // On crée un objet User
     $user = new User();

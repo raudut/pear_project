@@ -2,13 +2,41 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use App\Form\RegistrtionType;
+
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class SecurityController extends AbstractController
-{
+
+ class SecurityController extends AbstractController
+ {
+
+//     public function registration(Request $request, ObjectManager $manager)
+//     {
+//      $user = new User();
+
+//      $form = $this->createForm(RegistrtionType::class, $user);
+
+//      $form->handleRequest($request);
+
+//      if ($form->isSubmitted() && $form->isValid()) {
+//          $manager->persist($user);
+//          $manager->flush();
+
+
+        
+//      }
+
+//         return $this->render('user/add_user.html.twig', [
+//             'form' => $form->createView()
+//         ]);
+//     }
+    
     /**
      * @Route("/login", name="login")
      */
