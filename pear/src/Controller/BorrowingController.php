@@ -71,6 +71,12 @@ class BorrowingController extends AbstractController
         $borrowing->setIdUser($this->getUser());
         $entityManager->persist($borrowing);
         $entityManager->flush();
+
+        $prod = $borrowing->getIdProduct();
+        $statut[] = 'STATUT_LOUE';
+        $prod->setStatut($statut);
+        $entityManager->flush();
+
         
         return $this->redirectToRoute('list_borrowings');
         echo($borrowing->GetId());
