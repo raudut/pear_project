@@ -162,7 +162,7 @@ class ProductController extends AbstractController
     $encodeurl = urlencode($qrcode_message);
     //echo($encodeurl); 
     // goqr $url = "https://api.qrserver.com/v1/create-qrcode/?data=$encodeurl&size=100x100";
-    $url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=$encodeurl&choe=UTF-8";
+    $url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=$encodeurl&choe=UTF-8"; //API google
 
     echo('Hello');
     echo($url);
