@@ -71,7 +71,8 @@ class ProductController extends AbstractController
 
     $form->handleRequest($request);
     if($form->isSubmitted() && $form->isValid()) {
-      $task = $form->getData();
+      $product = $form->getData();
+      $product->setOwner($this->getUser());
       $entityManager -> persist($product);
       $entityManager->flush();
 
@@ -103,6 +104,7 @@ class ProductController extends AbstractController
        $product -> getEmplacement();
        $product -> getNumSerie();
        $product -> getKit();
+       $product -> getOwner();
 
     }
     return $this -> render ('product/list_products.html.twig', array("listProduct" => $listProduct));

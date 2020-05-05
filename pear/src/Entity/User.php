@@ -59,13 +59,16 @@ class User implements UserInterface
     private $borrowings;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Lender", mappedBy="iduser", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="owner", orphanRemoval=true)
      */
-    private $lender;
+    private $products;
+
+    
 
     public function __construct()
     {
         $this->borrowings = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
 
@@ -231,20 +234,36 @@ public function __toString()
         return $this;
     }
 
-    public function getLender(): ?Lender
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
     {
-        return $this->lender;
+        return $this->products;
     }
 
-    public function setLender(Lender $lender): self
+    public function addProduct(Product $product): self
     {
-        $this->lender = $lender;
-
-        // set the owning side of the relation if necessary
-        if ($lender->getIduser() !== $this) {
-            $lender->setIduser($this);
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setOwner($this);
         }
 
         return $this;
     }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
+            // set the owning side to null (unless already changed)
+            if ($product->getOwner() === $this) {
+                $product->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
 }

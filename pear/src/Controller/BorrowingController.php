@@ -49,15 +49,9 @@ class BorrowingController extends AbstractController
                 'class' => Product::class,
                 'choice_label' => 'nom',
                 'placeholder' => '== Choisir un objet ==',
-                /*'query_builder'=> function(ProductRepository $repo){
-                  return $repo->getDispoProduct();
-                }*/
                 'choices' => $productRepository -> findProductByStatut('STATUT_DISPONIBLE')
             ]) 
-      /*->add('idProduct', ChoiceType::class, array(
-        'placeholder' => '== Choisir un objet ==',
-        'choices' => $products
-    ))*/
+      
       ;
     
       

@@ -12,6 +12,7 @@
                 <th> Emplacement </th>
                 <th> Numéro de série </th>
                 <th> Kit </th>
+                <th> Owner </th>
                 <th> Statut </th>
             </tr>
             </thead>
@@ -26,6 +27,7 @@
                 <td>{{ product.emplacement }}</td>
                 <td>{{ product.numSerie }}</td>
                 <td>{{ product.kit }}</td>
+                <td>{{ product.owner }}</td>
                 {%for statut in product.statut%}
                 <td>{{ statut }} </td>
                 {%endfor%}

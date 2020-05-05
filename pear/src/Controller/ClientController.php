@@ -114,15 +114,14 @@ class ClientController extends AbstractController
     array("listUser" => $listUser));
   }
 
-  public function delete_client(UserRepository $userRepository , LenderRepository $lenderRepository, BorrowingRepository $borrowingRepository, $id)
+
+  public function delete_client(UserRepository $userRepository, BorrowingRepository $borrowingRepository, $id)
   {
     
       $user = $userRepository -> findOneById($id);
-      $lender = $lenderRepository -> findOneByIduser($id);
       $borrowing = $borrowingRepository -> findOneByidUser($id);
 
       $entityManager = $this->getDoctrine()->getManager();
-      if(!is_null($lender)) {$entityManager->remove($lender);}
       if(!is_null($borrowing)) {$entityManager->remove($borrowing);}
       
       $entityManager->remove($user);
@@ -131,6 +130,27 @@ class ClientController extends AbstractController
       $listUser = $userRepository -> findAll();
       return $this -> render ('user/list_users.html.twig', array("listUser" => $listUser));
     }
+
+    
+
+    public function add_lender()
+    {
+      $entityManager = $this->getDoctrine()->getManager();
+      $connUser = $this->getUser();
+      $role[] = 'ROLE_LENDER';
+      $connUser->setRoles($role);
+      $entityManager->flush();
+      return $this->redirectToRoute('list_lenders');
+      
+  }
+
+  public function list_lenders(UserRepository $userRepository)
+  {
+
+    $listLender = $userRepository -> findAllLenders('ROLE_LENDER');
+
+    return $this -> render ('lender/list_lenders.html.twig', array("listLender" => $listLender));
+  }
 
     
   
