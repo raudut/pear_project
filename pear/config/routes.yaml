@@ -55,7 +55,7 @@ qrcode_product:
 # Routes pour les emprunts
 
 add_borrowing:
-  path: /add-borrowing
+  path: /add-borrowing/{id}
   controller: App\Controller\BorrowingController::add_borrowing
 
 list_borrowings:
