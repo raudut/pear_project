@@ -104,7 +104,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_LENDER';
+        $roles[] = 'ROLE_BORROWER';
 
         return array_unique($roles);
     }
@@ -112,8 +112,9 @@ class User implements UserInterface
         $roles = $this->getRoles('security.role_hierarchy'); 
         return array(
             "Administrateur" => "ROLE_ADMIN",
+            "Preteur" => "ROLE_LENDER", 
             "Loueur" => "ROLE_BORROWER",
-            "Preteur" => "ROLE_LENDER",        
+                   
         );
     }
     public function setRoles(array $roles): self
