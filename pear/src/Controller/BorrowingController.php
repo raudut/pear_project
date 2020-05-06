@@ -27,11 +27,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BorrowingController extends AbstractController
 {
     
-    public function add_borrowing(Request $request, ProductRepository $productRepository)
+    public function add_borrowing(Request $request, ProductRepository $productRepository, $id)
     {
 
-        // On crée un objet Borrowing
+       
     $borrowing = new Borrowing();
+    
 
     $entityManager = $this->getDoctrine()->getManager();
 
@@ -45,19 +46,13 @@ class BorrowingController extends AbstractController
       ->add('dateDebut', DateType::class)
       ->add('dateFin', DateType::class)
       ->add('save',      SubmitType::class)
-      ->add('idProduct', EntityType::class, [
+      /*->add('idProduct', EntityType::class, [
                 'class' => Product::class,
                 'choice_label' => 'nom',
                 'placeholder' => '== Choisir un objet ==',
-                /*'query_builder'=> function(ProductRepository $repo){
-                  return $repo->getDispoProduct();
-                }*/
                 'choices' => $productRepository -> findProductByStatut('STATUT_DISPONIBLE')
-            ]) 
-      /*->add('idProduct', ChoiceType::class, array(
-        'placeholder' => '== Choisir un objet ==',
-        'choices' => $products
-    ))*/
+            ]) */
+      
       ;
     
       
@@ -69,6 +64,8 @@ class BorrowingController extends AbstractController
     if ($form->isSubmitted() && $form->isValid()) {
         $borrowing = $form->getData();
         $borrowing->setIdUser($this->getUser());
+        $product = $productRepository->findOneById($id);
+        $borrowing->setIdProduct($product);
         $entityManager->persist($borrowing);
         $entityManager->flush();
 

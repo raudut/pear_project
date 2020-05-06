@@ -12,6 +12,7 @@
                 <th> Emplacement </th>
                 <th> Numéro de série </th>
                 <th> Kit </th>
+                <th> Owner </th>
                 <th> Statut </th>
             </tr>
             </thead>
@@ -26,9 +27,9 @@
                 <td>{{ product.emplacement }}</td>
                 <td>{{ product.numSerie }}</td>
                 <td>{{ product.kit }}</td>
-                {%for statut in product.statut%}
-                <td>{{ statut }} </td>
-                {%endfor%}
+                <td>{{ product.owner }}</td>
+                <td>{{ product.statut[0]}}</td>
+                
                 <td>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-primary">
@@ -42,6 +43,12 @@
                     </label>
                     <label class="btn btn-primary">
                       <input type="checkbox" onclick="self.location.href='/qrcode-product/{{product.id}}'" autocomplete="off"> Générer un QrCode
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="checkbox" onclick="self.location.href='/add-borrowing/{{product.id}}'" autocomplete="off"> Emprunter
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="checkbox" onclick="" autocomplete="off"> Rendre
                     </label>
                   </div>
                 </td>

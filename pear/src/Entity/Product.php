@@ -64,10 +64,10 @@ class Product
     private $statut = [];
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Lender", inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idLender;
+    private $owner;
 
     
 
@@ -239,6 +239,17 @@ class Product
         return $this;
     }
 
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
 
     
 
