@@ -119,7 +119,8 @@ class ClientController extends AbstractController
     
       $user = $userRepository -> findOneById($id);
       $lender = $lenderRepository -> findOneByIduser($id);
-      $borrowing = $borrowingRepository -> findOneByidUser($id);
+      $borrowing = $borrowingRepository ->  findOneByidUser($id);
+      
 
       $entityManager = $this->getDoctrine()->getManager();
       if(!is_null($lender)) {$entityManager->remove($lender);}
