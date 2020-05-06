@@ -27,7 +27,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BorrowingController extends AbstractController
 {
     
-    public function add_borrowing(Request $request)
+    public function add_borrowing(Request $request, ProductRepository $productRepository)
     {
 
         // On crée un objet Borrowing
@@ -38,6 +38,7 @@ class BorrowingController extends AbstractController
     // On crée le FormBuilder grâce au service form factory
     $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $borrowing);
 
+    //$products = $productRepository -> findProductByStatut('STATUT_DISPONIBLE');
 
     // On ajoute les champs de l'entité que l'on veut à notre formulaire
     $formBuilder
@@ -46,8 +47,11 @@ class BorrowingController extends AbstractController
       ->add('save',      SubmitType::class)
       ->add('idProduct', EntityType::class, [
                 'class' => Product::class,
+                'choice_label' => 'nom',
                 'placeholder' => '== Choisir un objet ==',
+                'choices' => $productRepository -> findProductByStatut('STATUT_DISPONIBLE')
             ]) 
+      
       ;
     
       
@@ -61,6 +65,12 @@ class BorrowingController extends AbstractController
         $borrowing->setIdUser($this->getUser());
         $entityManager->persist($borrowing);
         $entityManager->flush();
+
+        $prod = $borrowing->getIdProduct();
+        $statut[] = 'STATUT_LOUE';
+        $prod->setStatut($statut);
+        $entityManager->flush();
+
         
         return $this->redirectToRoute('list_borrowings');
         echo($borrowing->GetId());

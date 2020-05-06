@@ -27,11 +27,11 @@ delete_client:
 #Route des preteurs
 add_lender:
    path: /add-lender
-   controller: App\Controller\LenderController::add_lender
+   controller: App\Controller\ClientController::add_lender
 
 list_lenders:
   path: /list-lenders
-  controller: App\Controller\LenderController::list_lenders
+  controller: App\Controller\ClientController::list_lenders
 
 
 #Route product
@@ -47,9 +47,14 @@ delete_product:
   path: /delete-product/{id}
   controller: App\Controller\ProductController::delete_products
 
+#Route Qr Code
 qrcode_product:
   path: /qrcode-product/{id}
   controller: App\Controller\ProductController::genarateQRcode
+
+qrcode_confirmation:
+  path: /qrcode-confirmation/{id}
+  controller: App\Controller\ProductController::confirmationQRcode
 
 
 # Routes pour les emprunts

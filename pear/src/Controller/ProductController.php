@@ -71,7 +71,8 @@ class ProductController extends AbstractController
 
     $form->handleRequest($request);
     if($form->isSubmitted() && $form->isValid()) {
-      $task = $form->getData();
+      $product = $form->getData();
+      $product->setOwner($this->getUser());
       $entityManager -> persist($product);
       $entityManager->flush();
 
@@ -103,6 +104,7 @@ class ProductController extends AbstractController
        $product -> getEmplacement();
        $product -> getNumSerie();
        $product -> getKit();
+       $product -> getOwner();
 
     }
     return $this -> render ('product/list_products.html.twig', array("listProduct" => $listProduct));
@@ -151,27 +153,42 @@ class ProductController extends AbstractController
   public function genarateQRcode(Request $request,ProductRepository $productRepository, $id){
     // On crée un objet Advert
     $product = $productRepository -> findOneById($id);
-
+    
     $etat= $product->getEtat();
     $numSerie=$product->getNumserie();
     $nom=$product->GetNom();
+    $statut=$product->GetStatut();
     //$borrowing=$product->getBorrowing();
     
-    $qrcode_message="Lobjet $nom ayant pour numero de serie $numSerie est : Dispo car le site n'est pas en ligne pour le moment pour le moment. Il est en $etat état.";
-    
+    //$qrcode_message="Lobjet $nom ayant pour numero de serie $numSerie est : Dispo car le site n'est pas en ligne pour le moment pour le moment. Il est en $etat état.";
+    $qrcode_message="https:/127.0.0.1:8000/qrcode-confirmation/$id";
     $encodeurl = urlencode($qrcode_message);
     //echo($encodeurl); 
     // goqr $url = "https://api.qrserver.com/v1/create-qrcode/?data=$encodeurl&size=100x100";
-    $url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=$encodeurl&choe=UTF-8";
-
-    echo('Hello');
-    echo($url);
-
-
+    $url = "https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=$encodeurl&choe=UTF-8"; //API google
 
     return $this->render('product/qrcode_product.html.twig', array(
       'url' => $url,
-    ));
+      'statut' => $statut,
+      'product' => $product
+       ));
+  }
+
+  public function confirmationQRcode(Request $request,ProductRepository $productRepository, $id){
+    // On crée un objet Advert
+    $product = $productRepository -> findOneById($id);
+    
+    $etat= $product->getEtat();
+    $numSerie=$product->getNumserie();
+    $nom=$product->GetNom();
+    $statut=$product->GetStatut();
+    //$borrowing=$product->getBorrowing();
+    
+
+    return $this->render('product/qrcode_confirmation.html.twig', array(
+      'statut' => $statut,
+      'product' => $product
+       ));
   }
 
 
