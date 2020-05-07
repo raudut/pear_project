@@ -30,8 +30,12 @@ class BorrowingController extends AbstractController
     public function add_borrowing(Request $request, ProductRepository $productRepository, $id)
     {
 
-       
-    $borrowing = new Borrowing();
+      $produit = $productRepository->findOneById($id);
+      $stat = $produit->getStatut();
+
+      if(in_array('STATUT_DISPONIBLE', $stat)){
+        
+         $borrowing = new Borrowing();
     
 
     $entityManager = $this->getDoctrine()->getManager();
@@ -83,6 +87,12 @@ class BorrowingController extends AbstractController
     return $this->render('borrowing/add_borrowing.html.twig', array(
       'form' => $form->createView(),
     ));
+      }
+       
+else{
+        return $this -> render ('security/erreur.html.twig');
+      }
+   
 
     }
 

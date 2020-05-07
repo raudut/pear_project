@@ -105,6 +105,7 @@ class ProductController extends AbstractController
        $product -> getNumSerie();
        $product -> getKit();
        $product -> getOwner();
+       $product -> GetStatut();
 
     }
     return $this -> render ('product/list_products.html.twig', array("listProduct" => $listProduct));
