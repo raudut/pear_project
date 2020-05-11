@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+//use App\Form\UserFormType;
 use App\Entity\User;
 use App\Entity\Lender;
 use App\Controller\ArrayList;
@@ -86,7 +87,7 @@ class ClientController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        return $this->redirectToRoute('list_clients');
+        return $this->redirectToRoute('login');
     }
 
 
@@ -100,6 +101,34 @@ class ClientController extends AbstractController
       'form' => $form->createView(),
     ));
   }
+
+
+/*
+  public function edit_client(Request $request, User $user){
+    
+      $form = $this->createForm(UserFormType::class, $user);
+        $form->handleRequest($request);
+ 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+ 
+            $this->addFlash(
+            'notice',
+            'Le slide a correctement été modifier.'
+            );
+ 
+            return $this->redirectToRoute('list_clients');
+        }
+
+        return $this->render('user/edit_user.html.twig', [
+            'slide' => $slide,
+            'form' => $form->createView(),
+        ]);
+
+  }
+
+*/
+
 
   public function list_clients( UserRepository $userRepository)
   {

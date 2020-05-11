@@ -1,4 +1,13 @@
-{% extends 'base.html.twig' %}
+{% if is_granted('ROLE_ADMIN') -%}
+    {% set extendedTemplate = "base_admin.html.twig" %}
+{% elseif is_granted('ROLE_LENDER') -%}
+    {% set extendedTemplate = "base_lender.html.twig" %}
+{% else %}
+    {% set extendedTemplate = "base_user.html.twig" %}
+{%- endif %}
+
+{% extends extendedTemplate %}
+
  {% block title %}Liste des clients{% endblock %}
  
     {% block body %}
@@ -22,10 +31,8 @@
     			<td>{{ user.prenom }}</td>
 				<td>{{ user.email }}</td>
 				<td>{{ user.naissance | date('d/m/Y')}}</td>
+				<td>{{ user.roles[0]}}</td>
 				
-				{%for roles in user.roles%}
-				<td>{{roles}}</td>
-				{%endfor%}
 				<td>
 				<div class="btn-group btn-group-toggle" data-toggle="buttons">
 					<label class="btn btn-primary">
@@ -35,7 +42,7 @@
 					  <input type="checkbox" onclick="self.location.href='/delete-client/{{user.id}}'" autocomplete="off"> Supprimer
 					</label>
 					<label class="btn btn-primary">
-					  <input type="checkbox" onclick="" autocomplete="off"> Modifier
+					  <input type="checkbox" onclick="self.location.href='/edit-client/{{user.id}}'" autocomplete="off"> Modifier
 					</label>
 				  </div>
 				</td>

@@ -1,4 +1,12 @@
-{% extends 'base.html.twig' %}
+{% if is_granted('ROLE_ADMIN') -%}
+    {% set extendedTemplate = "base_admin.html.twig" %}
+{% elseif is_granted('ROLE_LENDER') -%}
+    {% set extendedTemplate = "base_lender.html.twig" %}
+{% else %}
+    {% set extendedTemplate = "base_user.html.twig" %}
+{%- endif %}
+
+{% extends extendedTemplate %}
 
 {% block title %}Ajouter Borrowing !{% endblock %}
 
@@ -24,13 +32,7 @@
   {# Génération manuelle et éclatée : #}
   
 
-  <div class="form-group">
-  {{form_label(form.idProduct, "Objet", {'label_attr' : {'class':'col-sm-2 control-label'}})}}
-  {{form_errors (form.idProduct)}}
-      <div class="col-sm-10">
-      {{ form_widget(form.idProduct, {'attr': {'class': 'form-control'}}) }}
-    </div>
-</div>
+  
 
 <div class="form-group">
   {{form_label(form.dateDebut, "Date de début", {'label_attr' : {'class':'col-sm-2 control-label'}})}}

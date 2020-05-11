@@ -1,46 +1,32 @@
-{% if is_granted('ROLE_ADMIN') -%}
-    {% set extendedTemplate = "base_admin.html.twig" %}
-{% elseif is_granted('ROLE_LENDER') -%}
-    {% set extendedTemplate = "base_lender.html.twig" %}
-{% else %}
-    {% set extendedTemplate = "base_user.html.twig" %}
-{%- endif %}
-
-{% extends extendedTemplate %}
-
+{% extends 'base.html.twig' %}
  {% block title %}Liste des objets{% endblock %}
  
-  {% block body %}
-
-
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3">
-          {%include  'product/_filter.html.twig' with {form: form} only %}
-        </div>
-      </div>
-
-
-
-      <div class="col-md-9">        
-        <table class="table table-hover">
-          <thead>
+    {% block body %}
+    	<table class="table table-hover">
+            <thead>
             <tr>
-              <th> Nom </th>
-              <th> Prix </th>
-              <th> Categorie </th>            
-              <th> Owner </th>
-              <th> Statut </th>
+    			<th> Nom </th>
+    			<th> Prix </th>
+    			<th> Caution </th>
+    			<th> Etat </th>
+                <th> Emplacement </th>
+                <th> Numéro de série </th>
+                <th> Kit </th>
+           
+                <th> Statut </th>
             </tr>
-          </thead>
-          <tbody>
-          {% if products is defined %}
-            {%for product in products %}
-              <tr>
-                <td>{{ product.nom }}</td>
-                <td>{{ product.prix}}</td>
-                <td>{{product.categorie}}</td>               
-                <td>{{ product.owner }}</td>
+            </thead>
+            <tbody>
+		{% if listProduct is defined %}
+    		{%for product in listProduct %}
+			<tr>
+    			<td>{{ product.nom }}</td>
+    			<td>{{ product.prix }}</td>
+    			<td>{{ product.caution }}</td>
+                <td>{{ product.etat }}</td>
+                <td>{{ product.emplacement }}</td>
+                <td>{{ product.numSerie }}</td>
+                <td>{{ product.kit }}</td>
                 <td>{{ product.statut[0]}}</td>
                 
                 <td>
@@ -65,14 +51,13 @@
                     </label>
                   </div>
                 </td>
-              </tr>    			
-            {% endfor %}
-          {%endif%}
-          </tbody>
-        </table> 
-      </div>
-    </div>
-  {% endblock %}
+			</tr>    			
+			{% endfor %}
+		{%endif%}
+        </tbody>
+          </table> 
+
+{% endblock %}
 
 
 

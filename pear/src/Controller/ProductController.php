@@ -31,7 +31,6 @@ class ProductController extends AbstractController
     // On crée un objet Advert
     $product = new Product();
     $entityManager = $this->getDoctrine()->getManager();
-    //echo $this->tabCategories($catrepo)['0'];
     // On crée le FormBuilder grâce au service form factory
     $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $product);
 
@@ -92,10 +91,17 @@ class ProductController extends AbstractController
     ));
   }
 
+
  
+  public function list_products_by_lender(ProductRepository $productRepository)
+  {
+    $user = $this -> getUser();
+    $id = $user -> getId();
+    $listProduct =  $productRepository -> findBy(['owner' => $id]);
 
-  
 
+    return $this -> render ('product/list_products_by_lender.html.twig', array("listProduct" => $listProduct));
+  }
 
   public function list_products( ProductRepository $productRepository, Request $request)
   {
@@ -133,13 +139,17 @@ class ProductController extends AbstractController
         )
       
       );
+
+
+        return $this  -> render('product/list_products.html.twig',
+
+        array("Liste"=> $listProducts));
   }
 
   
     
   public function delete_products(ProductRepository $productRepository, BorrowingRepository $borrowingRepository, $id)
   {
-   
     $product = $productRepository -> findOneById($id);
     $borrowing = $borrowingRepository -> findOneByidUser($id);
 

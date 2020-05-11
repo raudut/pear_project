@@ -27,6 +27,25 @@ class ProductRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findByUserId($brandId)
+{
+    $qb = $this->createQueryBuilder('rm');
+    $qb->where('IDENTITY(rm.brand) = :brandId')
+       ->setParameter('brandId', $brandId);
+
+    return $qb->getQuery()->getResult();
+}
+    
+    public function findProductByIdUser($owner)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p')
+            ->where('p.owner LIKE :owner')
+            ->setParameter('owner', '%"'.$owner.'"%');
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Product::class);
@@ -37,51 +56,38 @@ class ProductRepository extends ServiceEntityRepository
      * Récupère les produits en lien avec une recherche
      * @return Product[]
      */
-    public function findSearch(SearchData $data): array
-    {
+    public function findSearch(SearchData $data): array{
+        $query = $this
+        ->createQueryBuilder('p')
+        ->select('c', 'p')
+        ->join('p.categorie', 'c');
 
-
-         $query = $this
-             ->createQueryBuilder('p')
-             ->select('c', 'p')
-             ->join('p.categorie', 'c');
-
-         if (!empty($data->q)) {
-             $query = $query
-                 ->andWhere('p.nom LIKE :q')
-                 ->setParameter('q', "%{$data->q}%");
-         }
-
-         if (!empty($data->min)) {
-             $query = $query
-                 ->andWhere('p.prix >= :min')
-                 ->setParameter('min', $data->min);
-         }
-
-         if (!empty($data->max)) {
-             $query = $query
-                 ->andWhere('p.prix <= :max')
-                 ->setParameter('max', $data->max);
-         }
-
-
-         if (!empty($data->categorie)) {
-             $query = $query
-                 ->andWhere('c.id IN (:categorie)')
-                 ->setParameter('categorie', $data->categorie);
-         }
-
-        // return $this->paginator->paginate(
-        //     $query,
-        //     $search->page,
-        //     9
-        // );
-           
-        return $query -> getQuery()->getResult();
+    if (!empty($data->q)) {
+        $query = $query
+            ->andWhere('p.nom LIKE :q')
+            ->setParameter('q', "%{$data->q}%");
     }
 
-    private function getSearchQuery(SearchData $search, $ignorePrice = false): QueryBuilder
-    {
+    if (!empty($data->min)) {
+        $query = $query
+            ->andWhere('p.prix >= :min')
+            ->setParameter('min', $data->min);
     }
 
+    if (!empty($data->max)) {
+        $query = $query
+            ->andWhere('p.prix <= :max')
+            ->setParameter('max', $data->max);
+    }
+
+
+    if (!empty($data->categorie)) {
+        $query = $query
+            ->andWhere('c.id IN (:categorie)')
+            ->setParameter('categorie', $data->categorie);
+    }
+
+      
+   return $query -> getQuery()->getResult();
+    }
 }

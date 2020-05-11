@@ -4,13 +4,6 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel= "stylesheet" href="https://bootswatch.com/4/spacelab/bootstrap.min.css">
-        <style>
-            .filter{
-              diplay: block;
-              position: sticky;
-              top: 20px;
-            }
-        </style>
         {% block stylesheets %}{% endblock %}
    
        </head>
@@ -25,7 +18,7 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                  <a class="nav-link" onclick="#">Home</a>
+                  <a class="nav-link" onclick="self.location.href='/home_admin'">Home</a>
                 </li>
               </ul>
             </div>
