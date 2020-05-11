@@ -93,58 +93,16 @@ class ProductController extends AbstractController
 
     $listProduct =  $productRepository -> findBy(['owner' => $id]);
 
-    foreach ($listProduct as $product){
-       $product -> getNom();
-       $product -> getPrix();
-       $product -> getCaution();
-       $product -> getEtat();
-       $product -> getEmplacement();
-       $product -> getNumSerie();
-       $product -> getKit();
-           }
+
     return $this -> render ('product/list_products_by_lender.html.twig', array("listProduct" => $listProduct));
   }
-
-  /*
-
-  public function list_obj( ProductRepository $productRepository)
-  {
-
-    $listProduct = $productRepository -> findAll();
-
-    foreach ($listProduct as $product){
-       $product -> getNom();
-       $product -> getPrix();
-       $product -> getCaution();
-       $product -> getEtat();
-       $product -> getEmplacement();
-       $product -> getNumSerie();
-       $product -> getKit();
-       $product -> getOwner();
-       $product -> GetStatut();
-
-    }
-    return $this -> render ('product/list_products.html.twig', array("listProduct" => $listProduct));
-  }
-*/
 
   public function list_products( ProductRepository $productRepository)
   {
 
     $listProducts = $productRepository -> findAll();
 
-      foreach($listProducts as $product)
-      {
-        
-        $product -> getNom();
-        $product -> getPrix();
-        $product -> getCaution();
-        $product -> getEtat();
-        $product -> getEmplacement();
-        $product -> getNumSerie();
-        $product -> getKit();
-      }
-       return $this  -> render('product/list_products.html.twig',
+        return $this  -> render('product/list_products.html.twig',
         array("Liste"=> $listProducts));
   }
 
