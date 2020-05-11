@@ -58,13 +58,9 @@ class BorrowingController extends AbstractController
             ]) */
       
       ;
-    
-      
+         
     $form = $formBuilder->getForm();
-    
-
-
-     $form->handleRequest($request);
+    $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
         $borrowing = $form->getData();
         $borrowing->setIdUser($this->getUser());

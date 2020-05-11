@@ -39,9 +39,6 @@ class ProductController extends AbstractController
     
     $entityManager = $this->getDoctrine()->getManager();
 
-
-    $entityManager = $this->getDoctrine()->getManager();
-
     // On crée le FormBuilder grâce au service form factory
     $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $product);
 
@@ -87,25 +84,30 @@ class ProductController extends AbstractController
     ));
   }
 
-  
 
+ 
+  public function list_products_by_lender(ProductRepository $productRepository)
+  {
+    $user = $this -> getUser();
+    $id = $user -> getId();
+
+
+    $listProduct =  $productRepository -> findBy(['owner' => $id]);
+
+
+
+    return $this -> render ('product/list_products_by_lender.html.twig', array("listProduct" => $listProduct));
+  }
 
   public function list_products( ProductRepository $productRepository)
   {
 
     $listProducts = $productRepository -> findAll();
 
-      foreach($listProducts as $product)
-      {
-        $product -> getNom();
-        $product -> getPrix();
-        $product -> getCaution();
-        $product -> getEtat();
-        $product -> getEmplacement();
-        $product -> getNumSerie();
-        $product -> getKit();
-      }
-       return $this  -> render('product/list_products.html.twig',
+
+
+        return $this  -> render('product/list_products.html.twig',
+
         array("Liste"=> $listProducts));
   }
 

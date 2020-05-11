@@ -25,10 +25,31 @@ class ProductRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findByUserId($brandId)
+{
+    $qb = $this->createQueryBuilder('rm');
+    $qb->where('IDENTITY(rm.brand) = :brandId')
+       ->setParameter('brandId', $brandId);
+
+    return $qb->getQuery()->getResult();
+}
+    
+    public function findProductByIdUser($owner)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p')
+            ->where('p.owner LIKE :owner')
+            ->setParameter('owner', '%"'.$owner.'"%');
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Product::class);
     }
+
+
 
     // /**
     //  * @return Product[] Returns an array of Product objects
