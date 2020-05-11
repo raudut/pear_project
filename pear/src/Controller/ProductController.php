@@ -87,29 +87,6 @@ class ProductController extends AbstractController
     ));
   }
 
- 
-
-  
-
-  public function list_obj( ProductRepository $productRepository)
-  {
-
-    $listProduct = $productRepository -> findAll();
-
-    foreach ($listProduct as $product){
-       $product -> getNom();
-       $product -> getPrix();
-       $product -> getCaution();
-       $product -> getEtat();
-       $product -> getEmplacement();
-       $product -> getNumSerie();
-       $product -> getKit();
-       $product -> getOwner();
-       $product -> GetStatut();
-
-    }
-    return $this -> render ('product/list_products.html.twig', array("listProduct" => $listProduct));
-  }
   
 
 
@@ -120,7 +97,6 @@ class ProductController extends AbstractController
 
       foreach($listProducts as $product)
       {
-        
         $product -> getNom();
         $product -> getPrix();
         $product -> getCaution();
@@ -137,7 +113,6 @@ class ProductController extends AbstractController
     
   public function delete_products(ProductRepository $productRepository, BorrowingRepository $borrowingRepository, $id)
   {
-   
     $product = $productRepository -> findOneById($id);
     $borrowing = $borrowingRepository -> findOneByidUser($id);
 

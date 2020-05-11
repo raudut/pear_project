@@ -7,6 +7,18 @@ login:
   path: /login
   controller: App\Controller\SecurityController::login
 
+home_admin:
+  path: /home_admin
+  controller: App\Controller\AppController::home_admin
+
+home_lender:
+  path: /home_lender
+  controller: App\Controller\AppController::home_lender
+
+home_user:
+  path: /home_user
+  controller: App\Controller\AppController::home_user
+
 
 
 #Route des users
@@ -22,6 +34,10 @@ list_clients:
 delete_client:
   path: /delete-client/{id}
   controller: App\Controller\ClientController::delete_client
+
+edit-client:
+  path: /edit-client/{id}
+  controller: App\Controller\ClientController::edit_client
 
 
 #Route des preteurs
