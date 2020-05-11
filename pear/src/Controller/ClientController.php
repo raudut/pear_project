@@ -27,6 +27,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Test\FormBuilderInterface;
 
 class ClientController extends AbstractController
@@ -62,7 +63,7 @@ class ClientController extends AbstractController
       ->add('prenom',     TextType::class)
       ->add('email',   EmailType::class)      
       ->add('password',    PasswordType::class)
-      ->add('naissance', DateType::class)
+      ->add('naissance', BirthdayType::class)
       ->add('save',      SubmitType::class)
       ->add('roles', CollectionType::class, [
         'entry_type'   => ChoiceType::class,

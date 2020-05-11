@@ -3,45 +3,35 @@
 
 namespace App\Controller;
 
-use App\Entity\Borrowing;
-use App\Entity\User;
 use App\Entity\Product;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\UserRepository;
+use App\Data\SearchData;
+use App\Form\SearchForm;
+use App\Entity\Categorie;
 use App\Repository\ProductRepository;
 use App\Repository\BorrowingRepository;
+use App\Repository\CategorieRepository;
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+
+
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-
-
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
   
 
 
-  public function add_product(Request $request){
+  public function add_product(Request $request, CategorieRepository $catrepo){
     // On crée un objet Advert
     $product = new Product();
-    
     $entityManager = $this->getDoctrine()->getManager();
-
-
-    $entityManager = $this->getDoctrine()->getManager();
-
+    //echo $this->tabCategories($catrepo)['0'];
     // On crée le FormBuilder grâce au service form factory
     $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $product);
 
@@ -49,13 +39,28 @@ class ProductController extends AbstractController
     $formBuilder
       ->add('nom',      TextType::class)
       ->add('prix',     TextType::class)
+      ->add('categorie', EntityType::class, [
+        'label' => false,
+        'required' => true,
+        'class' => Categorie::class,
+        'expanded' => true,
+        'multiple' => false
+    ])
       ->add('caution',   TextType::class)
       ->add('etat',    TextType::class)
-      ->add('emplacement',    TextType::class)
-      ->add('num_serie',    TextType::class)
-      ->add('kit',    TextType::class)
+      ->add('emplacement',    TextType::class,[
+        'required'=> false
+      ])
+      ->add('num_serie',    TextType::class, [
+        'required'=> false
+      ]
+      )
+      ->add('kit',    TextType::class, [
+        'required'=> false,
+      ])
       ->add('save',      SubmitType::class)
       ->add('statut', CollectionType::class, [
+        
         'entry_type'   => ChoiceType::class,
         'entry_options'  => [
             'choices'  => [
@@ -91,28 +96,8 @@ class ProductController extends AbstractController
 
   
 
-  public function list_obj( ProductRepository $productRepository)
-  {
 
-    $listProduct = $productRepository -> findAll();
-
-    foreach ($listProduct as $product){
-       $product -> getNom();
-       $product -> getPrix();
-       $product -> getCaution();
-       $product -> getEtat();
-       $product -> getEmplacement();
-       $product -> getNumSerie();
-       $product -> getKit();
-       $product -> getOwner();
-
-    }
-    return $this -> render ('product/list_products.html.twig', array("listProduct" => $listProduct));
-  }
-  
-
-
-  public function list_products( ProductRepository $productRepository)
+  public function list_products( ProductRepository $productRepository, Request $request)
   {
 
     $listProducts = $productRepository -> findAll();
@@ -122,14 +107,32 @@ class ProductController extends AbstractController
         
         $product -> getNom();
         $product -> getPrix();
+        $product -> getCategorie();
         $product -> getCaution();
         $product -> getEtat();
         $product -> getEmplacement();
         $product -> getNumSerie();
         $product -> getKit();
       }
+
+        $data = new SearchData();
+        
+        $form = $this->createForm(SearchForm::class, $data);
+        $form->handleRequest($request);
+        
+        $products = $productRepository->findSearch($data);
+        //dd($products);
+        //foreach($products as $product){ echo $product->getNom();}
+
+
        return $this  -> render('product/list_products.html.twig',
-        array("Liste"=> $listProducts));
+        array("Liste"=> $listProducts,
+        'products' => $products,
+        'form' => $form->createView()
+        
+        )
+      
+      );
   }
 
   
@@ -189,6 +192,19 @@ class ProductController extends AbstractController
       'statut' => $statut,
       'product' => $product
        ));
+  }
+
+  private function tabCategories(CategorieRepository $repo)
+  {
+    $list = $repo -> findAll();
+    $tab = array();
+    for($i=0; $i<sizeof($list); $i++){
+      echo $s=$list[$i]->getCategorie();
+      $tab[$i] = array($i => $s);
+    }
+    
+    return  $tab;
+
   }
 
 

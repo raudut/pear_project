@@ -1,59 +1,61 @@
 {% extends 'base.html.twig' %}
  {% block title %}Liste des objets{% endblock %}
  
-    {% block body %}
-    	<table class="table table-hover">
-            <thead>
+  {% block body %}
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          {%include  'product/_filter.html.twig' with {form: form} only %}
+        </div>
+      </div>
+
+
+
+      <div class="col-md-9">        
+        <table class="table table-hover">
+          <thead>
             <tr>
-    			<th> Nom </th>
-    			<th> Prix </th>
-    			<th> Caution </th>
-    			<th> Etat </th>
-                <th> Emplacement </th>
-                <th> Numéro de série </th>
-                <th> Kit </th>
-                <th> Owner </th>
-                <th> Statut </th>
+              <th> Nom </th>
+              <th> Prix </th>
+              <th> Categorie </th>            
+              <th> Owner </th>
+              <th> Statut </th>
             </tr>
-            </thead>
-            <tbody>
-		{% if Liste is defined %}
-    		{%for product in Liste %}
-			<tr>
-    			<td>{{ product.nom }}</td>
-    			<td>{{ product.prix }}</td>
-    			<td>{{ product.caution }}</td>
-                <td>{{ product.etat }}</td>
-                <td>{{ product.emplacement }}</td>
-                <td>{{ product.numSerie }}</td>
-                <td>{{ product.kit }}</td>
+          </thead>
+          <tbody>
+          {% if products is defined %}
+            {%for product in products %}
+              <tr>
+                <td>{{ product.nom }}</td>
+                <td>{{ product.prix}}</td>
+                <td>{{product.categorie}}</td>               
                 <td>{{ product.owner }}</td>
-                {%for statut in product.statut%}
-                <td>{{ statut }} </td>
-                {%endfor%}
+                  {%for statut in product.statut%}
+                    <td>{{ statut }} </td>
+                  {%endfor%}
                 <td>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-primary">
-                      <input type="checkbox" onclick= autocomplete="off"> Details
-                    </label>
-                    <label class="btn btn-primary">
-                      <input type="checkbox" onclick="self.location.href='/delete-product/{{product.id}}'" autocomplete="off"> Supprimer
-                    </label>
-                    <label class="btn btn-primary">
-                      <input type="checkbox" onclick="" autocomplete="off"> Modifier
-                    </label>
-                    <label class="btn btn-primary">
-                      <input type="checkbox" onclick="self.location.href='/qrcode-product/{{product.id}}'" autocomplete="off"> Générer un QrCode
-                    </label>
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn btn-primary">
+                        <input type="checkbox" onclick= autocomplete="off"> Details
+                      </label>
+                      <label class="btn btn-primary">
+                        <input type="checkbox" onclick="self.location.href='/delete-product/{{product.id}}'" autocomplete="off"> Supprimer
+                      </label>
+                      <label class="btn btn-primary">
+                        <input type="checkbox" onclick="self.location.href='/qrcode-product/{{product.id}}'" autocomplete="off"> Générer un QrCode
+                      </label>
                   </div>
                 </td>
-			</tr>    			
-			{% endfor %}
-		{%endif%}
-        </tbody>
-          </table> 
-
-{% endblock %}
+              </tr>    			
+            {% endfor %}
+          {%endif%}
+          </tbody>
+        </table> 
+      </div>
+    </div>
+  {% endblock %}
 
 
 

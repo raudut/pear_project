@@ -39,19 +39,21 @@ class Product
     private $etat;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
+
     private $emplacement;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $numSerie;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $kit;
+
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Borrowing", mappedBy="idProduct", orphanRemoval=true)
@@ -68,6 +70,12 @@ class Product
      * @ORM\JoinColumn(nullable=false)
      */
     private $owner;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="product")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
 
     
 
@@ -238,6 +246,18 @@ class Product
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

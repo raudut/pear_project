@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Product;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Data\SearchData;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -30,32 +32,56 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Product
+/**
+     * Récupère les produits en lien avec une recherche
+     * @return Product[]
+     */
+    public function findSearch(SearchData $data): array
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+
+
+         $query = $this
+             ->createQueryBuilder('p')
+             ->select('c', 'p')
+             ->join('p.categorie', 'c');
+
+         if (!empty($data->q)) {
+             $query = $query
+                 ->andWhere('p.nom LIKE :q')
+                 ->setParameter('q', "%{$data->q}%");
+         }
+
+         if (!empty($data->min)) {
+             $query = $query
+                 ->andWhere('p.prix >= :min')
+                 ->setParameter('min', $data->min);
+         }
+
+         if (!empty($data->max)) {
+             $query = $query
+                 ->andWhere('p.prix <= :max')
+                 ->setParameter('max', $data->max);
+         }
+
+
+         if (!empty($data->categorie)) {
+             $query = $query
+                 ->andWhere('c.id IN (:categorie)')
+                 ->setParameter('categorie', $data->categorie);
+         }
+
+        // return $this->paginator->paginate(
+        //     $query,
+        //     $search->page,
+        //     9
+        // );
+           
+        return $query -> getQuery()->getResult();
     }
-    */
+
+    private function getSearchQuery(SearchData $search, $ignorePrice = false): QueryBuilder
+    {
+    }
+
 }

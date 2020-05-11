@@ -70,3 +70,16 @@ list_borrowings:
 delete_borrowing:
   path: /delete-borrowing/{id}
   controller: App\Controller\BorrowingController::delete_borrowing
+
+#categories
+add_categorie:
+  path: /add-categorie
+  controller: App\Controller\CategorieController::add_categorie
+
+list_categories:
+  path: /list-categories
+  controller: App\Controller\CategorieController::list_categories
+
+delete_categorie:
+  path: /delete-categorie/{id}
+  controller: App\Controller\CategorieController::delete_categorie

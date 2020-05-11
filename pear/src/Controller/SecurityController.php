@@ -15,28 +15,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
  class SecurityController extends AbstractController
  {
-
-//     public function registration(Request $request, ObjectManager $manager)
-//     {
-//      $user = new User();
-
-//      $form = $this->createForm(RegistrtionType::class, $user);
-
-//      $form->handleRequest($request);
-
-//      if ($form->isSubmitted() && $form->isValid()) {
-//          $manager->persist($user);
-//          $manager->flush();
-
-
-        
-//      }
-
-//         return $this->render('user/add_user.html.twig', [
-//             'form' => $form->createView()
-//         ]);
-//     }
-    
     /**
      * @Route("/login", name="login")
      */

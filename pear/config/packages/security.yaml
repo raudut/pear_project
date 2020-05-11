@@ -22,7 +22,7 @@ security:
                     - App\Security\AppCustomAuthenticator
             logout:
                 path: logout
-
+                target: /login
                 # login_path: /login
                 # check_path: /login
                 # where to redirect after logout
