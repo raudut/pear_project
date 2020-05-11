@@ -104,8 +104,7 @@ class ProductController extends AbstractController
     return $this -> render ('product/list_products_by_lender.html.twig', array("listProduct" => $listProduct));
   }
 
-  
-
+  /*
   public function list_obj( ProductRepository $productRepository)
   {
 
@@ -124,8 +123,7 @@ class ProductController extends AbstractController
     }
     return $this -> render ('product/list_products.html.twig', array("listProduct" => $listProduct));
   }
-
-
+*/
 
   public function list_products( ProductRepository $productRepository)
   {
