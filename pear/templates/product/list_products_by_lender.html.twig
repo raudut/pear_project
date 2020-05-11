@@ -1,13 +1,4 @@
-{% if is_granted('ROLE_ADMIN') -%}
-    {% set extendedTemplate = "base_admin.html.twig" %}
-{% elseif is_granted('ROLE_LENDER') -%}
-    {% set extendedTemplate = "base_lender.html.twig" %}
-{% else %}
-    {% set extendedTemplate = "base_user.html.twig" %}
-{%- endif %}
-
-{% extends extendedTemplate %}
-
+{% extends 'base.html.twig' %}
  {% block title %}Liste des objets{% endblock %}
  
     {% block body %}
@@ -21,13 +12,13 @@
                 <th> Emplacement </th>
                 <th> Numéro de série </th>
                 <th> Kit </th>
-                <th> Owner </th>
+           
                 <th> Statut </th>
             </tr>
             </thead>
             <tbody>
-		{% if Liste is defined %}
-    		{%for product in Liste %}
+		{% if listProduct is defined %}
+    		{%for product in listProduct %}
 			<tr>
     			<td>{{ product.nom }}</td>
     			<td>{{ product.prix }}</td>
@@ -36,7 +27,6 @@
                 <td>{{ product.emplacement }}</td>
                 <td>{{ product.numSerie }}</td>
                 <td>{{ product.kit }}</td>
-                <td>{{ product.owner }}</td>
                 <td>{{ product.statut[0]}}</td>
                 
                 <td>

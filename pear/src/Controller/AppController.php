@@ -37,5 +37,20 @@ class AppController extends AbstractController
   	return $this -> render('app/home.html.twig');
   }
 
+  public function home_admin()
+  {
+  	return $this -> render('app/home_admin.html.twig');
+  }
+
+  public function home_lender()
+  {
+  	return $this -> render('app/home_lender.html.twig');
+  }
+
+  public function home_user()
+  {
+  	return $this -> render('app/home_user.html.twig');
+  }
+
 
 }

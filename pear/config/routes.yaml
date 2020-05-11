@@ -7,6 +7,18 @@ login:
   path: /login
   controller: App\Controller\SecurityController::login
 
+home_admin:
+  path: /home_admin
+  controller: App\Controller\AppController::home_admin
+
+home_lender:
+  path: /home_lender
+  controller: App\Controller\AppController::home_lender
+
+home_user:
+  path: /home_user
+  controller: App\Controller\AppController::home_user
+
 
 
 #Route des users
@@ -23,6 +35,10 @@ delete_client:
   path: /delete-client/{id}
   controller: App\Controller\ClientController::delete_client
 
+edit-client:
+  path: /edit-client/{id}
+  controller: App\Controller\ClientController::edit_client
+
 
 #Route des preteurs
 add_lender:
@@ -34,6 +50,9 @@ list_lenders:
   controller: App\Controller\ClientController::list_lenders
 
 
+
+
+
 #Route product
 add_product:
   path: /add-product
@@ -42,6 +61,10 @@ add_product:
 list_products:
   path: /list-products
   controller: App\Controller\ProductController::list_products
+
+list_products_by_lender:
+  path: /list-products-by-lender
+  controller: App\Controller\ProductController::list_products_by_lender
 
 delete_product:
   path: /delete-product/{id}
@@ -60,7 +83,7 @@ qrcode_confirmation:
 # Routes pour les emprunts
 
 add_borrowing:
-  path: /add-borrowing
+  path: /add-borrowing/{id}
   controller: App\Controller\BorrowingController::add_borrowing
 
 list_borrowings:

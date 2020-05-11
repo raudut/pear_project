@@ -27,11 +27,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BorrowingController extends AbstractController
 {
     
-    public function add_borrowing(Request $request, ProductRepository $productRepository)
+    public function add_borrowing(Request $request, ProductRepository $productRepository, $id)
     {
 
-        // On crée un objet Borrowing
-    $borrowing = new Borrowing();
+      $produit = $productRepository->findOneById($id);
+      $stat = $produit->getStatut();
+
+      if(in_array('STATUT_DISPONIBLE', $stat)){
+        
+         $borrowing = new Borrowing();
+    
 
     $entityManager = $this->getDoctrine()->getManager();
 
@@ -45,24 +50,22 @@ class BorrowingController extends AbstractController
       ->add('dateDebut', DateType::class)
       ->add('dateFin', DateType::class)
       ->add('save',      SubmitType::class)
-      ->add('idProduct', EntityType::class, [
+      /*->add('idProduct', EntityType::class, [
                 'class' => Product::class,
                 'choice_label' => 'nom',
                 'placeholder' => '== Choisir un objet ==',
                 'choices' => $productRepository -> findProductByStatut('STATUT_DISPONIBLE')
-            ]) 
+            ]) */
       
       ;
-    
-      
+         
     $form = $formBuilder->getForm();
-    
-
-
-     $form->handleRequest($request);
+    $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
         $borrowing = $form->getData();
         $borrowing->setIdUser($this->getUser());
+        $product = $productRepository->findOneById($id);
+        $borrowing->setIdProduct($product);
         $entityManager->persist($borrowing);
         $entityManager->flush();
 
@@ -80,6 +83,12 @@ class BorrowingController extends AbstractController
     return $this->render('borrowing/add_borrowing.html.twig', array(
       'form' => $form->createView(),
     ));
+      }
+       
+else{
+        return $this -> render ('security/erreur.html.twig');
+      }
+   
 
     }
 
