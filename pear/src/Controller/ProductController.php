@@ -85,6 +85,24 @@ class ProductController extends AbstractController
   }
 
  
+  public function list_products_by_lender(ProductRepository $productRepository)
+  {
+    $user = $this -> getUser();
+    $id = $user -> getId();
+
+    $listProduct =  $productRepository -> findBy(['owner' => $id]);
+
+    foreach ($listProduct as $product){
+       $product -> getNom();
+       $product -> getPrix();
+       $product -> getCaution();
+       $product -> getEtat();
+       $product -> getEmplacement();
+       $product -> getNumSerie();
+       $product -> getKit();
+           }
+    return $this -> render ('product/list_products_by_lender.html.twig', array("listProduct" => $listProduct));
+  }
 
   
 
@@ -106,7 +124,7 @@ class ProductController extends AbstractController
     }
     return $this -> render ('product/list_products.html.twig', array("listProduct" => $listProduct));
   }
-  
+
 
 
   public function list_products( ProductRepository $productRepository)

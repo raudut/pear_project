@@ -34,6 +34,9 @@ list_lenders:
   controller: App\Controller\ClientController::list_lenders
 
 
+
+
+
 #Route product
 add_product:
   path: /add-product
@@ -42,6 +45,10 @@ add_product:
 list_products:
   path: /list-products
   controller: App\Controller\ProductController::list_products
+
+list_products_by_lender:
+  path: /list-products-by-lender
+  controller: App\Controller\ProductController::list_products_by_lender
 
 delete_product:
   path: /delete-product/{id}
