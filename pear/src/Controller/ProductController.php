@@ -90,6 +90,7 @@ class ProductController extends AbstractController
     $user = $this -> getUser();
     $id = $user -> getId();
 
+
     $listProduct =  $productRepository -> findBy(['owner' => $id]);
 
     foreach ($listProduct as $product){
@@ -105,6 +106,7 @@ class ProductController extends AbstractController
   }
 
   /*
+
   public function list_obj( ProductRepository $productRepository)
   {
 
@@ -119,6 +121,7 @@ class ProductController extends AbstractController
        $product -> getNumSerie();
        $product -> getKit();
        $product -> getOwner();
+       $product -> GetStatut();
 
     }
     return $this -> render ('product/list_products.html.twig', array("listProduct" => $listProduct));
