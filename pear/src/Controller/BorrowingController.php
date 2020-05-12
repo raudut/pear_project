@@ -107,6 +107,19 @@ else{
     array("listBorrowing" => $listBorrowing));
   }
 
+
+  public function list_my_borrowings( BorrowingRepository $borrowingRepository){
+    $user = $this -> getUser();
+    $id = $user -> getId();
+
+
+    $listBorrowing =  $borrowingRepository -> findBy(['idUser' => $id]);
+
+    return $this -> render ('borrowing/list_my_borrowings.html.twig', array("listBorrowing" => $listBorrowing));
+    }
+
+
+
   public function delete_borrowing(BorrowingRepository $borrowingRepository , $id)
   {
     

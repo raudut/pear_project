@@ -170,7 +170,7 @@ class ClientController extends AbstractController
       $role[] = 'ROLE_LENDER';
       $connUser->setRoles($role);
       $entityManager->flush();
-      return $this->redirectToRoute('list_lenders');
+      return $this->redirectToRoute('home_lender');
       
   }
 

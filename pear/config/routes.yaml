@@ -94,6 +94,11 @@ delete_borrowing:
   path: /delete-borrowing/{id}
   controller: App\Controller\BorrowingController::delete_borrowing
 
+list_my_borrowings:
+  path: /list-my-borrowings
+  controller: App\Controller\BorrowingController::list_my_borrowings
+
+
 #categories
 add_categorie:
   path: /add-categorie
@@ -106,3 +111,6 @@ list_categories:
 delete_categorie:
   path: /delete-categorie/{id}
   controller: App\Controller\CategorieController::delete_categorie
+
+
+
