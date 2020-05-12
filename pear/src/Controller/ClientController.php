@@ -33,21 +33,6 @@ use Symfony\Component\Form\Test\FormBuilderInterface;
 
 class ClientController extends AbstractController
 { 
-
-  /* public function add_client(FormBuilderInterface $builder, array $options ){
-
-
-    $builder
-      ->add('nom'    )
-      ->add('prenom')   
-      ->add('email')      
-      ->add('password', PasswordType::class)
-      ->add('naissance', DateType::class)
-      ;
-     
-      
-  }}*/
-
  public function add_client(Request $request)
   {
     // On crée un objet User
