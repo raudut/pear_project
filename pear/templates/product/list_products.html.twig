@@ -13,65 +13,35 @@
   {% block body %}
 
 
-    <div class="container">
+    
       <div class="row">
         <div class="col-md-3">
           {%include  'product/_filter.html.twig' with {form: form} only %}
         </div>
       </div>
-
-
-
-      <div class="col-md-9">        
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th> Nom </th>
-              <th> Prix </th>
-              <th> Categorie </th>            
-              <th> Owner </th>
-              <th> Statut </th>
-            </tr>
-          </thead>
-          <tbody>
-          {% if products is defined %}
-            {%for product in products %}
-              <tr>
-                <td>{{ product.nom }}</td>
-                <td>{{ product.prix}}</td>
-                <td>{{product.categorie}}</td>               
-                <td>{{ product.owner }}</td>
-                <td>{{ product.statut[0]}}</td>
-                
-                <td>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-primary">
-                      <input type="checkbox" onclick= autocomplete="off"> Details
-                    </label>
-                    <label class="btn btn-primary">
-                      <input type="checkbox" onclick="self.location.href='/delete-product/{{product.id}}'" autocomplete="off"> Supprimer
-                    </label>
-                    <label class="btn btn-primary">
-                      <input type="checkbox" onclick="" autocomplete="off"> Modifier
-                    </label>
-                    <label class="btn btn-primary">
-                      <input type="checkbox" onclick="self.location.href='/qrcode-product/{{product.id}}'" autocomplete="off"> Générer un QrCode
-                    </label>
-                    <label class="btn btn-primary">
-                      <input type="checkbox" onclick="self.location.href='/add-borrowing/{{product.id}}'" autocomplete="off"> Emprunter
-                    </label>
-                    <label class="btn btn-primary">
-                      <input type="checkbox" onclick="" autocomplete="off"> Rendre
-                    </label>
-                  </div>
-                </td>
-              </tr>    			
-            {% endfor %}
-          {%endif%}
-          </tbody>
-        </table> 
-      </div>
-    </div>
+      <div class="col-md-9"> 
+        <div class="grid">
+          <table class="table table-hover">         
+            <tbody>
+            {% if products is defined %}
+              {%for product in products %}              
+                <tr>
+                  <td>{% include 'product/_card.html.twig' with {product: product} only %}</td>                
+                  <td>
+                    <button type="button" class="btn btn-outline-primary">Details</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="self.location.href='/add-borrowing/{{product.id}}'">Emprunter</button>
+                    <button type="button" class="btn btn-outline-success">Rendre</button>
+                    <button type="button" class="btn btn-outline-info" onclick="self.location.href='/qrcode-product/{{product.id}}'">Generer QrCode</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="self.location.href='/delete-product/{{product.id}}'">Supprimer</button>
+                  </td>
+                </tr>    			
+              {% endfor %}
+            {%endif%}
+            </tbody>
+          </table> 
+        </div>    
+       </div>
+   
   {% endblock %}
 
 
