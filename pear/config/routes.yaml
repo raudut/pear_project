@@ -86,6 +86,8 @@ qrcode_confirmation:
   controller: App\Controller\ProductController::confirmationQRcode
 
 
+
+
 # Routes pour les emprunts
 
 add_borrowing:
@@ -103,6 +105,10 @@ delete_borrowing:
 list_my_borrowings:
   path: /list-my-borrowings
   controller: App\Controller\BorrowingController::list_my_borrowings
+
+rendre_product:
+  path: /rendre-product/{id}
+  controller: App\Controller\BorrowingController::rendre_product
 
 
 #categories

@@ -31,11 +31,7 @@
     			<td>{{ bo.dateDebut|date('Y-m-d') }}</td>
                 <td>{{ bo.dateFin|date('Y-m-d') }}</td>
 				<td>
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-primary">
-                      <input type="checkbox" onclick="" autocomplete="off"> Rendre
-                    </label>
-                  </div>
+                    <button type="button" class="btn btn-outline-secondary" onclick="self.location.href='/rendre-product/{{bo.id}}'">Rendre</button>
                 </td>
 			</tr>    			
     		{% endfor %}

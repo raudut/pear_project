@@ -8,15 +8,18 @@ use App\Data\SearchData;
 use App\Form\SearchForm;
 use App\Entity\Categorie;
 use App\Repository\ProductRepository;
+use App\Controller\BorrowingController;
 use App\Repository\BorrowingRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\UserRepository;
 use phpDocumentor\Reflection\Types\String_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-
-
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -103,6 +106,16 @@ class ProductController extends AbstractController
     return $this -> render ('product/list_products_by_lender.html.twig', array("listProduct" => $listProduct));
   }
 
+  public function filtreproduit(Request $request, ProductRepository $productRepository){
+    $data = new SearchData();
+        
+    $form = $this->createForm(SearchForm::class, $data);
+    $form->handleRequest($request);
+    
+    $products = $productRepository->findSearch($data);
+    return array($form, $products);
+  }
+
   public function list_products( ProductRepository $productRepository, Request $request)
   {
 
@@ -121,14 +134,8 @@ class ProductController extends AbstractController
         $product -> getKit();
       }
 
-        $data = new SearchData();
-        
-        $form = $this->createForm(SearchForm::class, $data);
-        $form->handleRequest($request);
-        
-        $products = $productRepository->findSearch($data);
-        //dd($products);
-        //foreach($products as $product){ echo $product->getNom();}
+      $form= $this -> filtreproduit($request, $productRepository)[0];
+      $products = $this -> filtreproduit($request, $productRepository)[1];
 
 
        return $this  -> render('product/list_products.html.twig',
@@ -148,7 +155,7 @@ class ProductController extends AbstractController
 
   
     
-  public function delete_products(ProductRepository $productRepository, BorrowingRepository $borrowingRepository, $id)
+  public function delete_products(ProductRepository $productRepository, BorrowingRepository $borrowingRepository, $id, Request $request)
   {
     $product = $productRepository -> findOneById($id);
     $borrowing = $borrowingRepository -> findOneByidUser($id);
@@ -159,7 +166,12 @@ class ProductController extends AbstractController
       $entityManager->flush();
 
       $listProducts = $productRepository -> findAll();
-      return $this -> render ('product/list_products.html.twig', array("Liste" => $listProducts));
+      $form= $this -> filtreproduit($request, $productRepository)[0];
+      $products = $this -> filtreproduit($request, $productRepository)[1];
+      return $this -> render ('product/list_products.html.twig', array("Liste" => $listProducts,
+      'products' => $products,
+      'form' => $form->createView()
+    ));
   }
 
 
@@ -212,6 +224,8 @@ class ProductController extends AbstractController
       'product'=> $product
     ));
   }
+
+
 
 
 }

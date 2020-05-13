@@ -10,6 +10,7 @@ use App\Repository\ProductRepository;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use App\Repository\BorrowingRepository;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,59 +34,62 @@ class BorrowingController extends AbstractController
       $produit = $productRepository->findOneById($id);
       $stat = $produit->getStatut();
 
-      if(in_array('STATUT_DISPONIBLE', $stat)){
+      if(in_array('STATUT_DISPONIBLE', $stat))
+      {
         
-         $borrowing = new Borrowing();
+        $borrowing = new Borrowing();
     
 
-    $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
-    // On crée le FormBuilder grâce au service form factory
-    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $borrowing);
+        // On crée le FormBuilder grâce au service form factory
+        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $borrowing);
 
-    //$products = $productRepository -> findProductByStatut('STATUT_DISPONIBLE');
+        //$products = $productRepository -> findProductByStatut('STATUT_DISPONIBLE');
 
-    // On ajoute les champs de l'entité que l'on veut à notre formulaire
-    $formBuilder
-      ->add('dateDebut', DateType::class)
-      ->add('dateFin', DateType::class)
-      ->add('save',      SubmitType::class)
-      /*->add('idProduct', EntityType::class, [
-                'class' => Product::class,
-                'choice_label' => 'nom',
-                'placeholder' => '== Choisir un objet ==',
-                'choices' => $productRepository -> findProductByStatut('STATUT_DISPONIBLE')
-            ]) */
-      
-      ;
-         
-    $form = $formBuilder->getForm();
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        $borrowing = $form->getData();
-        $borrowing->setIdUser($this->getUser());
-        $product = $productRepository->findOneById($id);
-        $borrowing->setIdProduct($product);
-        $entityManager->persist($borrowing);
-        $entityManager->flush();
+        // On ajoute les champs de l'entité que l'on veut à notre formulaire
+        $formBuilder
+          ->add('dateDebut', DateType::class)
+          ->add('dateFin', DateType::class)
+          ->add('save',      SubmitType::class)
+          /*->add('idProduct', EntityType::class, [
+                    'class' => Product::class,
+                    'choice_label' => 'nom',
+                    'placeholder' => '== Choisir un objet ==',
+                    'choices' => $productRepository -> findProductByStatut('STATUT_DISPONIBLE')
+                ]) */
+          
+          ;
+            
+        $form = $formBuilder->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+          $borrowing = $form->getData();
+          $borrowing->setIdUser($this->getUser());
+          $product = $productRepository->findOneById($id);
+          $borrowing->setIdProduct($product);
+          $entityManager->persist($borrowing);
+          $entityManager->flush();
 
-        $prod = $borrowing->getIdProduct();
-        $statut[] = 'STATUT_LOUE';
-        $prod->setStatut($statut);
-        $entityManager->flush();
+          $prod = $borrowing->getIdProduct();
+          $statut[] = 'STATUT_LOUE';
+          $prod->setStatut($statut);
+          $entityManager->flush();
 
-        
-        return $this->redirectToRoute('list_borrowings');
-        echo($borrowing->GetId());
-    }
+          
+          return $this->redirectToRoute('list_borrowings');
+          echo($borrowing->GetId());
+        }
     
-    echo($this->get('security.token_storage')->getToken()->getUser()->getId());
-    return $this->render('borrowing/add_borrowing.html.twig', array(
-      'form' => $form->createView(),
-    ));
+        echo($this->get('security.token_storage')->getToken()->getUser()->getId());
+        return $this->render('borrowing/add_borrowing.html.twig', array(
+          'form' => $form->createView(),
+        ));
       }
        
-else{
+      else
+      {
         return $this -> render ('security/erreur.html.twig');
       }
    
@@ -132,5 +136,24 @@ else{
 
       $listBorrowing = $borrowingRepository -> findAll();
       return $this -> render ('borrowing/list_borrowings.html.twig', array("listBorrowing" => $listBorrowing));
+    }
+
+    public function rendre_product($id, ProductRepository $productRepository, BorrowingRepository $borrowingRepository){
+      $entityManager = $this->getDoctrine()->getManager();
+      $borrowing = $borrowingRepository -> findOneById($id);
+      $idProduct = $borrowing->getIdProduct();
+      $product = $productRepository -> findOneById($idProduct);
+echo $product ->getNom();
+      $statut[] = "STATUT_DISPONIBLE";
+      $product->setStatut($statut);
+      $entityManager->flush();
+
+      $this -> delete_borrowing($borrowingRepository, $borrowing);  
+      $entityManager->flush();
+
+      $listBorrowing =  $borrowingRepository -> findBy(['idUser' =>$borrowing->getIdUser()]);
+        return $this -> render ('borrowing/list_my_borrowings.html.twig', array("listBorrowing" => $listBorrowing));
+      
+  
     }
 }
