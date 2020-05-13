@@ -34,10 +34,13 @@ use Symfony\Component\Form\Test\FormBuilderInterface;
 
 class ClientController extends AbstractController
 { 
+    
  public function add_client(Request $request)
   {
     // On crée un objet User
     $user = new User();
+    $mailadmin = new AppController();
+    $mailuser = new AppController();
 
     $entityManager = $this->getDoctrine()->getManager();
 
@@ -69,7 +72,12 @@ class ClientController extends AbstractController
      $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
         $user = $form->getData();
-        
+        $userlastname = $user->getNom();
+        $userfirstname = $user->getPrenom();
+        $username = " $userfirstname $userlastname";
+        $usermail = $user->getEmail();
+        $mailadmin-> send_email_add_user_admin($username,  $usermail);
+        $mailuser -> send_email_add_user_confirmation($username,  $usermail);
         $entityManager->persist($user);
         $entityManager->flush();
         $body = [
