@@ -38,7 +38,9 @@ delete_client:
 edit-client:
   path: /edit-client/{id}
   controller: App\Controller\ClientController::edit_client
-
+show-client:
+  path: /show-client/{id}
+  controller: App\Controller\ClientController::show_user
 
 #Route des preteurs
 add_lender:
