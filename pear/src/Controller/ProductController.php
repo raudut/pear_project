@@ -204,17 +204,13 @@ class ProductController extends AbstractController
        ));
   }
 
-  private function tabCategories(CategorieRepository $repo)
-  {
-    $list = $repo -> findAll();
-    $tab = array();
-    for($i=0; $i<sizeof($list); $i++){
-      echo $s=$list[$i]->getCategorie();
-      $tab[$i] = array($i => $s);
-    }
+  public function show_product($id, ProductRepository $productRepository){
+    $product = $productRepository -> findOneById($id);
     
-    return  $tab;
-
+    
+    return $this->render('product/show_product.html.twig', array(
+      'product'=> $product
+    ));
   }
 
 

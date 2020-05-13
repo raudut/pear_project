@@ -71,6 +71,10 @@ list_products_by_lender:
 delete_product:
   path: /delete-product/{id}
   controller: App\Controller\ProductController::delete_products
+  
+show_product:
+  path: /show-product/{id}
+  controller: App\Controller\ProductController::show_product
 
 #Route Qr Code
 qrcode_product:

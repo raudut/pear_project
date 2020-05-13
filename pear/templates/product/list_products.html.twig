@@ -28,7 +28,7 @@
                   <tr>
                     <td>{% include 'product/_card.html.twig' with {product: product} only %}</td>                
                     <td>                    
-                      <button type="button" class="btn btn-outline-primary">Details</button>
+                      <button type="button" class="btn btn-outline-primary" onclick="self.location.href='/show-product/{{product.id}}'">Details</button>
                     </td>
                     <td>
                       <button type="button" class="btn btn-outline-secondary" onclick="self.location.href='/add-borrowing/{{product.id}}'">Emprunter</button>
