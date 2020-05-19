@@ -1,5 +1,6 @@
 {% extends "base.html.twig" %}
 
+
  {% block title %}Liste des objets{% endblock %}
  
   {% block body %}
@@ -22,9 +23,8 @@
                   <td>
                     <button type="button" class="btn btn-outline-primary">Details</button>
                     <button type="button" class="btn btn-outline-secondary" onclick="self.location.href='/add-borrowing/{{product.id}}'">Emprunter</button>
-                    <button type="button" class="btn btn-outline-success">Rendre</button>
-                    <button type="button" class="btn btn-outline-info" onclick="self.location.href='/qrcode-product/{{product.id}}'">Generer QrCode</button>
-                    <button type="button" class="btn btn-outline-danger" onclick="self.location.href='/delete-product/{{product.id}}'">Supprimer</button>
+                    
+                    
                   </td>
                 </tr>    			
               {% endfor %}

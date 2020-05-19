@@ -21,7 +21,7 @@ class Categorie
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $categorie=[];
+    private $categorie;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="categorie", orphanRemoval=true)

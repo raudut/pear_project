@@ -146,6 +146,50 @@ class ProductController extends AbstractController
         array("Liste"=> $listProducts));
   }
 
+
+    public function list_products_dispo( ProductRepository $productRepository, Request $request)
+  {
+
+    $listProducts = $productRepository -> findBy(['statut' => "STATUT_DISPONIBLE"]); 
+
+      foreach($listProducts as $product)
+      {
+        
+        $product -> getNom();
+        $product -> getPrix();
+        $product -> getCategorie();
+        $product -> getCaution();
+        $product -> getEtat();
+        $product -> getEmplacement();
+        $product -> getNumSerie();
+        $product -> getKit();
+      }
+
+        $data = new SearchData();
+        
+        $form = $this->createForm(SearchForm::class, $data);
+        $form->handleRequest($request);
+        
+        $products = $productRepository->findSearch($data);
+        //dd($products);
+        //foreach($products as $product){ echo $product->getNom();}
+
+
+       return $this  -> render('product/list_products_dispo.html.twig',
+        array("Liste"=> $listProducts,
+        'products' => $products,
+        'form' => $form->createView()
+        
+        )
+      
+      );
+
+
+        return $this  -> render('product/list_products_dispo.html.twig',
+
+        array("Liste"=> $listProducts));
+  }
+
   
     
   public function delete_products(ProductRepository $productRepository, BorrowingRepository $borrowingRepository, $id)

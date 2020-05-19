@@ -15,20 +15,23 @@
    
        </head>
 
+
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="#">Pear</a>
+            
+            {% if is_granted('ROLE_ADMIN') -%}
+          {% set Home = "/home_admin" %}
+          <a class="navbar-brand" href="/home_admin">Pear</a>
+       {% elseif is_granted('ROLE_LENDER') -%}
+          {% set Home = "/home_lender" %}
+          <a class="navbar-brand" href="/home_lender">Pear</a>
+       {% elseif is_granted('ROLE_BORROWER') %}
+          {% set Home = "/home_user" %}
+          <a class="navbar-brand" href="/home_user">Pear</a>
+       {%- endif %}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
             </button>
-          
-            <div class="collapse navbar-collapse" id="navbarColor01">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                  <a class="nav-link" onclick="#">Home</a>
-                </li>
-              </ul>
-            </div>
         </nav>
         {% block javascript %}  {% endblock %}
     
