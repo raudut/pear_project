@@ -136,43 +136,84 @@ if ($response->Messages[0]->Status == 'success') {
 
 
 public function send_email_product ($user, $mailuseradd,  $object){
-  $bodyAdmin = [
-    'Messages' => [
-        [
-        'From' => [
-            'Email' => "pear@epf.fr",
-            'Name' => "Billy The Pear"
-        ],
-        'To' => [
+    $bodyAdmin = [
+        'Messages' => [
             [
-              'Email' => "pear@epf.fr",
-              'Name' => "Billy The Pear"
+            'From' => [
+                'Email' => "pear@epf.fr",
+                'Name' => "Billy The Pear"
+            ],
+            'To' => [
+                [
+                'Email' => "pear@epf.fr",
+                'Name' => "Billy The Pear"
+                ]
+            ],
+            'Subject' => "$user Il y a du mouvement!",
+            'HTMLPart' => "<h3>$mailuseradd il y a du mouvement !</h3></br> Bonjour, </br> Votre objet $object a été emprunté ! Plus d'informations sur Pear ..</br> A bientôt, <br/>Bien à toi, <br/> Billy The Pear "
             ]
-        ],
-        'Subject' => "$user Il y a du mouvement!",
-        'HTMLPart' => "<h3>$mailuseradd l y a du mouvement !</h3></br> Bonjour, </br> Votre objet $object a été emprunté ! Plus d'informations sur Pear ..</br> A bientôt, <br/>Bien à toi, <br/> Billy The Pear "
         ]
-    ]
-];
+    ];
 
-$ch = curl_init();
+    $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, "https://api.mailjet.com/v3.1/send");
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($bodyAdmin));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-    'Content-Type: application/json')
-);
-curl_setopt($ch, CURLOPT_USERPWD, "47219a1c999266c91efd07942860e61d:46478c82213deacd3a251becee8e5776");
-$server_output = curl_exec($ch);
-curl_close ($ch);
+    curl_setopt($ch, CURLOPT_URL, "https://api.mailjet.com/v3.1/send");
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($bodyAdmin));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+        'Content-Type: application/json')
+    );
+    curl_setopt($ch, CURLOPT_USERPWD, "47219a1c999266c91efd07942860e61d:46478c82213deacd3a251becee8e5776");
+    $server_output = curl_exec($ch);
+    curl_close ($ch);
 
-$response = json_decode($server_output);
-if ($response->Messages[0]->Status == 'success') {
-   // echo "Email sent successfully.";
-}
+    $response = json_decode($server_output);
+    if ($response->Messages[0]->Status == 'success') {
+    // echo "Email sent successfully.";
+    }
 
 } 
+
+public function send_email_rendre_product ($usermail, $user,  $object){
+    $bodyAdmin = [
+        'Messages' => [
+            [
+            'From' => [
+                'Email' => "pear@epf.fr",
+                'Name' => "Billy The Pear"
+            ],
+            'To' => [
+                [
+                'Email' => "$usermail",
+                //'Name' => "Billy The Pear"
+                ]
+            ],
+            'Subject' => " Il y a du mouvement!",
+            'HTMLPart' => "<h3>$user il y a du mouvement !</h3></br> Bonjour, </br> Votre objet $object a été rendu ! Plus d'informations sur Pear ..</br> A bientôt, <br/>Bien à toi, <br/> Billy The Pear "
+            ]
+        ]
+    ];
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, "https://api.mailjet.com/v3.1/send");
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($bodyAdmin));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+        'Content-Type: application/json')
+    );
+    curl_setopt($ch, CURLOPT_USERPWD, "47219a1c999266c91efd07942860e61d:46478c82213deacd3a251becee8e5776");
+    $server_output = curl_exec($ch);
+    curl_close ($ch);
+
+    $response = json_decode($server_output);
+    if ($response->Messages[0]->Status == 'success') {
+    // echo "Email sent successfully.";
+    }
+
+} 
+
 
 }

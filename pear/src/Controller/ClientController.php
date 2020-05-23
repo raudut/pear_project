@@ -80,42 +80,7 @@ class ClientController extends AbstractController
         $mailuser -> send_email_add_user_confirmation($username,  $usermail);
         $entityManager->persist($user);
         $entityManager->flush();
-        $body = [
-          'Messages' => [
-              [
-              'From' => [
-                  'Email' => "pear@epf.fr",
-                  'Name' => "PEAR"
-              ],
-              'To' => [
-                  [
-                  'Email' => "marthe.franckdepreaumont@epfedu.fr",
-                  'Name' => "MOUA"
-                  ]
-              ],
-              'Subject' => "Greetings from Mailjet.",
-              'HTMLPart' => "<h3>Dear User, welcome to Mailjet!</h3><br />May the delivery force be with you!"
-              ]
-          ]
-      ];
-       
-      $ch = curl_init();
-       
-      curl_setopt($ch, CURLOPT_URL, "https://api.mailjet.com/v3.1/send");
-      curl_setopt($ch, CURLOPT_POST, 1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-          'Content-Type: application/json')
-      );
-      curl_setopt($ch, CURLOPT_USERPWD, "47219a1c999266c91efd07942860e61d:46478c82213deacd3a251becee8e5776");
-      $server_output = curl_exec($ch);
-      curl_close ($ch);
-       
-      $response = json_decode($server_output);
-      if ($response->Messages[0]->Status == 'success') {
-          echo "Email sent successfully.";
-      }
+        
         return $this->redirectToRoute('login');
     }
 
@@ -212,11 +177,13 @@ class ClientController extends AbstractController
 
     public function add_lender()
     {
+      
       $entityManager = $this->getDoctrine()->getManager();
       $connUser = $this->getUser();
       $role[] = 'ROLE_LENDER';
       $connUser->setRoles($role);
       $entityManager->flush();
+
       return $this->redirectToRoute('home_lender');
       
   }

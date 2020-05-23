@@ -137,14 +137,23 @@ class BorrowingController extends AbstractController
     }
 
     public function rendre_product($id, ProductRepository $productRepository, BorrowingRepository $borrowingRepository){
+      $mailowner = new AppController();
       $entityManager = $this->getDoctrine()->getManager();
       $borrowing = $borrowingRepository -> findOneById($id);
       $idProduct = $borrowing->getIdProduct();
       $product = $productRepository -> findOneById($idProduct);
-echo $product ->getNom();
+      echo $product ->getNom();
       $statut[] = "STATUT_DISPONIBLE";
       $product->setStatut($statut);
       $entityManager->flush();
+
+      $lender = $product -> getIdlender();
+      $owneremail = $lender -> getEmail ();
+      $ownername = $lender -> getNom();
+      $productname = $product ->getNom();
+       
+
+      $mailowner->send_email_rendre_product($owneremail, $ownername,  $productname);
 
       $this -> delete_borrowing($borrowingRepository, $borrowing);  
       $entityManager->flush();
