@@ -145,12 +145,12 @@ public function send_email_product ($user, $mailuseradd,  $object){
             ],
             'To' => [
                 [
-                'Email' => "pear@epf.fr",
+                'Email' => "$mailuseradd",
                 'Name' => "Billy The Pear"
                 ]
             ],
             'Subject' => "$user Il y a du mouvement!",
-            'HTMLPart' => "<h3>$mailuseradd il y a du mouvement !</h3></br> Bonjour, </br> Votre objet $object a été emprunté ! Plus d'informations sur Pear ..</br> A bientôt, <br/>Bien à toi, <br/> Billy The Pear "
+            'HTMLPart' => "<h3>$user il y a du mouvement !</h3></br> Bonjour, </br> Votre objet $object a été emprunté ! Plus d'informations sur Pear ..</br> A bientôt, <br/>Bien à toi, <br/> Billy The Pear "
             ]
         ]
     ];
