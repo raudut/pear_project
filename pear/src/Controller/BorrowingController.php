@@ -79,7 +79,7 @@ class BorrowingController extends AbstractController
 
                 $mailuser->send_email_product($ownername, $owneremail,  $productname);
         
-                return $this->redirectToRoute('list_borrowings');
+                return $this->redirectToRoute('list_my_borrowings');
                 echo($borrowing->GetId());
             }
     

@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 
-{% block title %}Ajouter un objet{% endblock %}
+{% block title %}Modifier un objet{% endblock %}
 
 {% block body %}
 <style>
@@ -10,9 +10,9 @@
 </style>
 
 
-    <h1>Formulaire d'ajout</h1>
+    <h1>Modification d'un objet</h1>
 
-     <div>Bonjour  {{app.user.username}}! Vous allez ajouter un objet.</div>  
+     <div>Bonjour  {{app.user.username}}! Vous allez modifier les informations d'un objet.</div>  
   <div class="well">
   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
@@ -44,14 +44,6 @@
     </div>
   </div>
 
-      <div class="form-group">
-  {{form_label(form.categorie, "Categorie", {'label_attr' : {'class':'col-sm-2 control-label'}})}}
-  {{form_errors (form.categorie)}}
-      <div class="col-sm-10">
-      {{ form_widget(form.categorie)}}
-    </div>
-</div>
-
   <div class="form-group">
     {{ form_label(form.caution, "Quelle est la valeur de la caution ?", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
     {{ form_errors(form.caution) }}
@@ -60,7 +52,7 @@
     </div>
   </div>
 
-  <div class="form-group">
+    <div class="form-group">
     {{ form_label(form.etat, "Quel est l'état de l'objet ?", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
     {{ form_errors(form.etat) }}
     <div class="col-sm-10">
@@ -92,13 +84,29 @@
     </div>
   </div>
 
-  <div class="form-group">
+   <div class="form-group">
   {{form_label(form.statut, "Statut", {'label_attr' : {'class':'col-sm-2 control-label'}})}}
   {{form_errors (form.statut)}}
       <div class="col-sm-10">
       {{ form_widget(form.statut)}}
     </div>
 </div>
+
+
+      <div class="form-group">
+  {{form_label(form.categorie, "Categorie", {'label_attr' : {'class':'col-sm-2 control-label'}})}}
+  {{form_errors (form.categorie)}}
+      <div class="col-sm-10">
+      {{ form_widget(form.categorie)}}
+    </div>
+</div>
+
+  
+
+
+
+  
+ 
   {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
   {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary' }}) }}
 

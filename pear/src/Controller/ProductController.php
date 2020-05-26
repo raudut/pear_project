@@ -83,7 +83,7 @@ class ProductController extends AbstractController
       $entityManager -> persist($product);
       $entityManager->flush();
 
-      return $this->redirectToRoute('list_products');
+      return $this->redirectToRoute('list_products_by_lender');
     }
 
     // On passe la méthode createView() du formulaire à la vue
@@ -148,9 +148,7 @@ class ProductController extends AbstractController
       );
 
 
-        return $this  -> render('product/list_products.html.twig',
-
-        array("Liste"=> $listProducts));
+        
   }
 
 
@@ -201,6 +199,7 @@ class ProductController extends AbstractController
     
   public function delete_products(ProductRepository $productRepository, BorrowingRepository $borrowingRepository, $id, Request $request)
   {
+    $user = $this -> getUser();
     $product = $productRepository -> findOneById($id);
     $borrowing = $borrowingRepository -> findOneByidUser($id);
 
@@ -212,10 +211,15 @@ class ProductController extends AbstractController
       $listProducts = $productRepository -> findAll();
       $form= $this -> filtreproduit($request, $productRepository)[0];
       $products = $this -> filtreproduit($request, $productRepository)[1];
-      return $this -> render ('product/list_products.html.twig', array("Liste" => $listProducts,
-      'products' => $products,
-      'form' => $form->createView()
-    ));
+      if(in_array("ROLE_ADMIN", $user->getRoles())){
+          return $this->redirectToRoute('home_admin');
+        }
+        elseif (in_array("ROLE_LENDER",  $user->getRoles())) {
+          return $this->redirectToRoute('home_lender');
+        }
+        else{
+          return $this->redirectToRoute('home_user');
+        }
   }
 
 
@@ -270,6 +274,76 @@ class ProductController extends AbstractController
   }
 
 
+ public function edit_product(Request $request, Product $product){
+    
+    $entityManager = $this->getDoctrine()->getManager();
 
+    // On crée le FormBuilder grâce au service form factory
+    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $product);
+
+    // On ajoute les champs de l'entité que l'on veut à notre formulaire
+    $formBuilder
+      ->add('nom',      TextType::class)
+      ->add('prix',     TextType::class)
+      ->add('caution',   TextType::class)
+      ->add('etat',    TextType::class)
+      ->add('emplacement',    TextType::class,[
+        'required'=> false
+      ])
+      ->add('num_serie',    TextType::class, [
+        'required'=> false
+      ]
+      )
+      ->add('kit',    TextType::class, [
+        'required'=> false,
+      ])
+      ->add('statut', CollectionType::class, [
+        
+        'entry_type'   => ChoiceType::class,
+        'entry_options'  => [
+            'choices'  => [
+              $product->getStatutNames()
+            ],
+        ],
+    ])
+      ->add('categorie', EntityType::class, [
+        'label' => false,
+        'required' => true,
+        'class' => Categorie::class,
+        'expanded' => true,
+        'multiple' => false
+    ])
+      
+      
+      ->add('save',      SubmitType::class)
+      
+    ;
+      
+
+
+    $form = $formBuilder->getForm();
+
+
+     $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $product = $form->getData();
+        $entityManager->persist($product);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('list_products_by_lender');
+    }
+
+
+    // À partir du formBuilder, on génère le formulaire
+    
+
+    // On passe la méthode createView() du formulaire à la vue
+    // afin qu'elle puisse afficher le formulaire toute seule
+
+    return $this->render('product/edit_product.html.twig', array(
+      'form' => $form->createView(),
+    ));
+
+  }
 
 }

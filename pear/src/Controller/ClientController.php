@@ -115,31 +115,121 @@ class ClientController extends AbstractController
     ));
   }
 
-/*
+
   public function edit_client(Request $request, User $user){
     
-      $form = $this->createForm(UserFormType::class, $user);
-        $form->handleRequest($request);
- 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
- 
-            $this->addFlash(
-            'notice',
-            'Le slide a correctement été modifier.'
-            );
- 
-            return $this->redirectToRoute('list_clients');
-        }
+    $entityManager = $this->getDoctrine()->getManager();
 
-        return $this->render('user/edit_user.html.twig', [
-            'slide' => $slide,
-            'form' => $form->createView(),
-        ]);
+    // On crée le FormBuilder grâce au service form factory
+    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $user);
+
+    // On ajoute les champs de l'entité que l'on veut à notre formulaire
+    $formBuilder
+      ->add('nom',      TextType::class)
+      ->add('prenom',     TextType::class)
+      ->add('email',   EmailType::class)
+      ->add('naissance', BirthdayType::class)
+      ->add('save',      SubmitType::class)
+      ->add('roles', CollectionType::class, [
+        'entry_type'   => ChoiceType::class,
+        'entry_options'  => [
+            'choices'  => [
+              $user->getRolesNames()
+            ],
+        ],
+    ]);
+      
+
+
+    $form = $formBuilder->getForm();
+
+
+     $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $user = $form->getData();
+        $entityManager->persist($user);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('list_clients');
+    }
+
+
+    // À partir du formBuilder, on génère le formulaire
+    
+
+    // On passe la méthode createView() du formulaire à la vue
+    // afin qu'elle puisse afficher le formulaire toute seule
+
+    return $this->render('user/edit_user.html.twig', array(
+      'form' => $form->createView(),
+    ));
 
   }
 
-*/
+
+ public function edit_me(Request $request){
+
+   $user = $this -> getUser();
+    
+    $entityManager = $this->getDoctrine()->getManager();
+
+    // On crée le FormBuilder grâce au service form factory
+    $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $user);
+
+    // On ajoute les champs de l'entité que l'on veut à notre formulaire
+    $formBuilder
+      ->add('nom',      TextType::class)
+      ->add('prenom',     TextType::class)
+      ->add('email',   EmailType::class)
+      ->add('naissance', BirthdayType::class)
+      ->add('password',    PasswordType::class)
+      ->add('save',      SubmitType::class)
+      ->add('roles', CollectionType::class, [
+        'entry_type'   => ChoiceType::class,
+        'entry_options'  => [
+            'choices'  => [
+              $user->getRolesNames()
+            ],
+        ],
+    ]);
+      
+
+
+    $form = $formBuilder->getForm();
+
+
+     $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $user = $form->getData();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        if(in_array("ROLE_ADMIN", $user->getRoles())){
+          return $this->redirectToRoute('home_admin');
+        }
+        elseif (in_array("ROLE_LENDER",  $user->getRoles())) {
+          return $this->redirectToRoute('home_lender');
+        }
+        else{
+          return $this->redirectToRoute('home_user');
+        }
+        
+        
+    }
+
+
+    // À partir du formBuilder, on génère le formulaire
+    
+
+    // On passe la méthode createView() du formulaire à la vue
+    // afin qu'elle puisse afficher le formulaire toute seule
+
+    return $this->render('user/edit_me.html.twig', array(
+      'form' => $form->createView(),
+    ));
+
+  }
+
 
 
   public function list_clients( UserRepository $userRepository)
