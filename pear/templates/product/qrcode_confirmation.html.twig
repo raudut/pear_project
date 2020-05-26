@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 
-{% block title %} Confirmation d'emprun ou de rendu : {% endblock %}
+{% block title %} Confirmation d'emprunt ou de rendu : {% endblock %}
 
 {% block body %}
 
@@ -21,7 +21,7 @@
       <td> {{product.etat}} </td>
     </tr>
     <tr>
-      <th> Neméro de série </th>
+      <th> Numéro de série </th>
       <td> {{product.numSerie}} </td>
     </tr>
       <th> Satut </th>
@@ -29,6 +29,9 @@
       <td> {{Satut}} </td>
       {%endfor%}
   </Table>
+
+
+  {% if app.user.id == idOwner %}
 
 
 	{% if statut ends with 'STATUT_DISPONIBLE' %} 
@@ -50,6 +53,8 @@
   <label class="btn btn-primary">
     <input type="checkbox" onclick="" autocomplete="off"> Non
   </label>
+
+  {%endif%}
 
   {%endif%}
 

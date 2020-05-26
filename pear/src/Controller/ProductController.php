@@ -224,6 +224,7 @@ class ProductController extends AbstractController
 
 
   public function genarateQRcode(Request $request,ProductRepository $productRepository, $id){
+
     // On crée un objet Advert
     $product = $productRepository -> findOneById($id);
     
@@ -234,7 +235,7 @@ class ProductController extends AbstractController
     //$borrowing=$product->getBorrowing();
     
     //$qrcode_message="Lobjet $nom ayant pour numero de serie $numSerie est : Dispo car le site n'est pas en ligne pour le moment pour le moment. Il est en $etat état.";
-    $qrcode_message="https:/127.0.0.1:8000/qrcode-confirmation/$id";
+    $qrcode_message="127.0.0.1:8000/qrcode-confirmation/$id";
     $encodeurl = urlencode($qrcode_message);
     //echo($encodeurl); 
     // goqr $url = "https://api.qrserver.com/v1/create-qrcode/?data=$encodeurl&size=100x100";
@@ -248,6 +249,7 @@ class ProductController extends AbstractController
   }
 
   public function confirmationQRcode(Request $request,ProductRepository $productRepository, $id){
+
     // On crée un objet Advert
     $product = $productRepository -> findOneById($id);
     
@@ -255,11 +257,14 @@ class ProductController extends AbstractController
     $numSerie=$product->getNumserie();
     $nom=$product->GetNom();
     $statut=$product->GetStatut();
+    $owner=$product->getOwner();
+    $idOwner= $owner->getId();
     //$borrowing=$product->getBorrowing();
     
 
     return $this->render('product/qrcode_confirmation.html.twig', array(
       'statut' => $statut,
+      'idOwner' => $idOwner,
       'product' => $product
        ));
   }
