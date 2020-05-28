@@ -29,8 +29,14 @@ class ProductController extends AbstractController
 {
   
 
-
   public function add_product(Request $request, CategorieRepository $catrepo){
+
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
     // On crée un objet Advert
     $product = new Product();
     $entityManager = $this->getDoctrine()->getManager();
@@ -93,11 +99,18 @@ class ProductController extends AbstractController
       'form' => $form->createView(),
     ));
   }
+}
 
 
  
   public function list_products_by_lender(ProductRepository $productRepository)
   {
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
     $user = $this -> getUser();
     $id = $user -> getId();
     $listProduct =  $productRepository -> findBy(['owner' => $id]);
@@ -105,8 +118,16 @@ class ProductController extends AbstractController
 
     return $this -> render ('product/list_products_by_lender.html.twig', array("listProduct" => $listProduct));
   }
+}
 
   public function filtreproduit(Request $request, ProductRepository $productRepository){
+
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
     $data = new SearchData();
         
     $form = $this->createForm(SearchForm::class, $data);
@@ -115,9 +136,16 @@ class ProductController extends AbstractController
     $products = $productRepository->findSearch($data);
     return array($form, $products);
   }
+}
 
   public function list_products( ProductRepository $productRepository, Request $request)
   {
+
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
 
     $listProducts = $productRepository -> findAll();
 
@@ -147,13 +175,19 @@ class ProductController extends AbstractController
       
       );
 
-
+}
         
   }
 
 
     public function list_products_dispo( ProductRepository $productRepository, Request $request)
   {
+
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
 
     $listProducts = $productRepository -> findBy(['statut' => "STATUT_DISPONIBLE"]); 
 
@@ -194,11 +228,18 @@ class ProductController extends AbstractController
 
         array("Liste"=> $listProducts));
   }
+}
 
   
     
   public function delete_products(ProductRepository $productRepository, BorrowingRepository $borrowingRepository, $id, Request $request)
   {
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
     $user = $this -> getUser();
     $product = $productRepository -> findOneById($id);
     $borrowing = $borrowingRepository -> findOneByidUser($id);
@@ -221,9 +262,15 @@ class ProductController extends AbstractController
           return $this->redirectToRoute('home_user');
         }
   }
-
+}
 
   public function genarateQRcode(Request $request,ProductRepository $productRepository, $id){
+
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
 
     // On crée un objet Advert
     $product = $productRepository -> findOneById($id);
@@ -247,8 +294,16 @@ class ProductController extends AbstractController
       'product' => $product
        ));
   }
+  }
 
   public function confirmationQRcode(Request $request,ProductRepository $productRepository, $id){
+
+    //$user = $this -> getUser();
+    //if ($user == null){
+    //  $path = "127.0.0.1:8000/qrcode-confirmation/$id";
+    //  return $this->redirectToRoute('login', array('path' => $path));
+    //}
+    //else{
 
     // On crée un objet Advert
     $product = $productRepository -> findOneById($id);
@@ -268,8 +323,17 @@ class ProductController extends AbstractController
       'product' => $product
        ));
   }
+//}
+
 
   public function show_product($id, ProductRepository $productRepository){
+
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
     $product = $productRepository -> findOneById($id);
     
     
@@ -277,9 +341,16 @@ class ProductController extends AbstractController
       'product'=> $product
     ));
   }
+}
 
 
  public function edit_product(Request $request, Product $product){
+
+  $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
     
     $entityManager = $this->getDoctrine()->getManager();
 
@@ -350,5 +421,6 @@ class ProductController extends AbstractController
     ));
 
   }
+}
 
 }

@@ -16,6 +16,14 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 class CategorieController extends AppController{
 
     public function add_categorie(Request $request){
+
+      $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
+
         $categorie = new Categorie();
     
 
@@ -53,9 +61,16 @@ class CategorieController extends AppController{
     ));
           
     }
+  }
 
     public function list_categories( CategorieRepository $repo, Request $request)
     {
+
+      $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
   
       $list = $repo -> findAll();
   
@@ -73,9 +88,16 @@ class CategorieController extends AppController{
         
         );
     }
+  }
 
     public function delete_categorie(CategorieRepository $repo,  $id)
   {
+
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
    
     $categorie = $repo -> findOneById($id);
 
@@ -88,10 +110,17 @@ class CategorieController extends AppController{
 
       return $this -> render ('categories/list_categories.html.twig', array("list" => $list));
   }
+}
 
       public function edit_categorie(Request $request, Categorie $categorie){
         
-    
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
+
     $entityManager = $this->getDoctrine()->getManager();
 
     // On crée le FormBuilder grâce au service form factory
@@ -126,5 +155,6 @@ class CategorieController extends AppController{
     ));
           
     }
+  }
     
 }

@@ -97,6 +97,13 @@ class ClientController extends AbstractController
   }
 
   public function show_user(UserRepository $userRepo, $id, ProductRepository $productRepository, BorrowingRepository $borrowingRepo){
+
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
     $client= $userRepo -> findOneById($id);
     $listProduct =  $productRepository -> findBy(['owner' => $id]);
     $listBorrow = $borrowingRepo -> findBy(['idUser' => $id]);
@@ -114,9 +121,16 @@ class ClientController extends AbstractController
       'listBProduct' => $listBProduct
     ));
   }
+  }
 
 
   public function edit_client(Request $request, User $user){
+
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
     
     $entityManager = $this->getDoctrine()->getManager();
 
@@ -163,11 +177,18 @@ class ClientController extends AbstractController
     return $this->render('user/edit_user.html.twig', array(
       'form' => $form->createView(),
     ));
+  }
 
   }
 
 
  public function edit_me(Request $request){
+
+  $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
 
    $user = $this -> getUser();
     
@@ -229,11 +250,19 @@ class ClientController extends AbstractController
     ));
 
   }
+}
 
 
 
   public function list_clients( UserRepository $userRepository)
   {
+
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
     $listUser = $userRepository -> findAll();
     foreach ($listUser as $user){
        $user -> getNom();
@@ -245,11 +274,18 @@ class ClientController extends AbstractController
     return $this -> render ('user/list_users.html.twig', 
     array("listUser" => $listUser));
   }
+  }
 
 
   public function delete_client(UserRepository $userRepository, BorrowingRepository $borrowingRepository, $id)
   {
     
+      $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
       $user = $userRepository -> findOneById($id);
       $borrowing = $borrowingRepository -> findOneByidUser($id);
 
@@ -262,11 +298,18 @@ class ClientController extends AbstractController
       $listUser = $userRepository -> findAll();
       return $this -> render ('user/list_users.html.twig', array("listUser" => $listUser));
     }
+  }
 
     
 
     public function add_lender()
     {
+
+      $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
       
       $entityManager = $this->getDoctrine()->getManager();
       $connUser = $this->getUser();
@@ -277,14 +320,22 @@ class ClientController extends AbstractController
       return $this->redirectToRoute('home_lender');
       
   }
+}
 
   public function list_lenders(UserRepository $userRepository)
   {
+
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
 
     $listLender = $userRepository -> findAllLenders('ROLE_LENDER');
 
     return $this -> render ('lender/list_lenders.html.twig', array("listLender" => $listLender));
   }
+}
 
     
   
