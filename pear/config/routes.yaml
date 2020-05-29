@@ -38,6 +38,11 @@ delete_client:
 edit-client:
   path: /edit-client/{id}
   controller: App\Controller\ClientController::edit_client
+
+edit-me:
+  path: /edit-me
+  controller: App\Controller\ClientController::edit_me
+  
 show-client:
   path: /show-client/{id}
   controller: App\Controller\ClientController::show_user
@@ -77,6 +82,10 @@ delete_product:
 show_product:
   path: /show-product/{id}
   controller: App\Controller\ProductController::show_product
+
+edit_product:
+  path: /edit-product/{id}
+  controller: App\Controller\ProductController::edit_product
 
 #Route Qr Code
 qrcode_product:
@@ -125,6 +134,10 @@ list_categories:
 delete_categorie:
   path: /delete-categorie/{id}
   controller: App\Controller\CategorieController::delete_categorie
+
+edit_categorie:
+  path: /edit-categorie/{id}
+  controller: App\Controller\CategorieController::edit_categorie
 
 
 

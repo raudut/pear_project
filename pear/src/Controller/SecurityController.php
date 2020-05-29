@@ -23,7 +23,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
      //    if ($this->getUser()) {
      //        return $this->redirectToRoute('target_path');
      //    }
-
+       
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
