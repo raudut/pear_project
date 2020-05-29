@@ -25,7 +25,7 @@ set('allow_anonymous_stats', false);
 host('pear.min.epf.fr')
     ->user('min')
     ->port(2247)
-    ->set('deploy_path', '/var/www/html/pear.min.epf.fr/public_html');
+    ->set('deploy_path', '/var/www/html/pear.min.epf.fr/public_html/pear_project');
    
 // Tasks
 
