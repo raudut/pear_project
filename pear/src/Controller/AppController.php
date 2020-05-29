@@ -39,17 +39,35 @@ class AppController extends AbstractController
 
   public function home_admin()
   {
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
   	return $this -> render('app/home_admin.html.twig');
+    }
   }
 
   public function home_lender()
   {
-  	return $this -> render('app/home_lender.html.twig');
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+      return $this -> render('app/home_lender.html.twig');
+    }
   }
 
   public function home_user()
   {
+    $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
   	return $this -> render('app/home_user.html.twig');
+    }
   }
 
 

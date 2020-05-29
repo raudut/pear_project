@@ -93,6 +93,11 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
 
+        //if ($path != null){
+            //return new RedirectResponse ( $this -> urlGenerator -> generate($path));
+        //}
+        //else{
+
         $roles = $token->getUser()->getRoles();
 
         if(in_array("ROLE_ADMIN", $roles)){
@@ -113,6 +118,7 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         // return new RedirectResponse ( $this -> urlGenerator -> generate('home'));
     }
+//}
 
     protected function getLoginUrl()
     {

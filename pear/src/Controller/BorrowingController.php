@@ -30,6 +30,13 @@ class BorrowingController extends AbstractController
 {
     public function add_borrowing(Request $request, ProductRepository $productRepository, $id)
     {
+
+        $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
         $produit = $productRepository->findOneById($id);
         $stat = $produit->getStatut();
 
@@ -91,11 +98,19 @@ class BorrowingController extends AbstractController
             return $this -> render('security/erreur.html.twig');
         }
     }
+  }
 
 
 
     public function list_borrowings(BorrowingRepository $borrowingRepository)
     {
+
+        $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
         $listBorrowing = $borrowingRepository -> findAll();
         foreach ($listBorrowing as $bo) {
             $bo -> getIdUser();
@@ -108,10 +123,18 @@ class BorrowingController extends AbstractController
             array("listBorrowing" => $listBorrowing)
         );
     }
+  }
 
 
     public function list_my_borrowings(BorrowingRepository $borrowingRepository)
     {
+
+        $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
         $user = $this -> getUser();
         $id = $user -> getId();
 
@@ -120,11 +143,19 @@ class BorrowingController extends AbstractController
 
         return $this -> render('borrowing/list_my_borrowings.html.twig', array("listBorrowing" => $listBorrowing));
     }
+  }
 
 
 
     public function delete_borrowing(BorrowingRepository $borrowingRepository, $id)
     {
+
+        $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
         $bo = $borrowingRepository -> findOneById($id);
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -135,8 +166,16 @@ class BorrowingController extends AbstractController
         $listBorrowing = $borrowingRepository -> findAll();
         return $this -> render('borrowing/list_borrowings.html.twig', array("listBorrowing" => $listBorrowing));
     }
+  }
 
     public function rendre_product($id, ProductRepository $productRepository, BorrowingRepository $borrowingRepository){
+      
+      $user = $this -> getUser();
+    if ($user == null){
+      return $this->redirectToRoute('login');
+    }
+    else{
+
       $mailowner = new AppController();
       $entityManager = $this->getDoctrine()->getManager();
       $borrowing = $borrowingRepository -> findOneById($id);
@@ -161,6 +200,6 @@ class BorrowingController extends AbstractController
       $listBorrowing =  $borrowingRepository -> findBy(['idUser' =>$borrowing->getIdUser()]);
         return $this -> render ('borrowing/list_my_borrowings.html.twig', array("listBorrowing" => $listBorrowing));
       
-  
+  }
     }
 }
