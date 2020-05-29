@@ -1,0 +1,31 @@
+{% if is_granted('ROLE_ADMIN') -%}
+    {% set extendedTemplate = "base_admin.html.twig" %}
+{% elseif is_granted('ROLE_LENDER') -%}
+    {% set extendedTemplate = "base_lender.html.twig" %}
+{% else %}
+    {% set extendedTemplate = "base_user.html.twig" %}
+{%- endif %}
+
+{% extends extendedTemplate %}
+
+ {% block title %}Liste des Catégories{% endblock %}
+ 
+    {% block body %}
+    
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Catégorie</th>
+              </tr>
+            </thead>
+            <tbody>
+                {%for categorie in Liste %}
+              <tr>
+                <td>{{ categorie.id}} </td>
+                <td>{{ categorie.categorie }}</td>                
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table> 
+{% endblock %}
