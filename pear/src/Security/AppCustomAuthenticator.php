@@ -90,25 +90,37 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
         return $credentials['password'];
     }
 
+
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+
+        //$url = $this->getTargetPath($request->getSession(), 'main');
 
         //if ($path != null){
             //return new RedirectResponse ( $this -> urlGenerator -> generate($path));
         //}
         //else{
+        //$this->saveTargetPath($request->getSession(), $providerKey, $request->getUri());
 
-        $roles = $token->getUser()->getRoles();
+        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+            return new RedirectResponse($targetPath);
+        }
+    
+            $roles = $token->getUser()->getRoles();
 
-        if(in_array("ROLE_ADMIN", $roles)){
-            return new RedirectResponse ( $this -> urlGenerator -> generate('home_admin'));
-        }
-        elseif(in_array("ROLE_LENDER", $roles)){
-            return new RedirectResponse ( $this -> urlGenerator -> generate('home_lender'));
-        }
-        else{
-            return new RedirectResponse ( $this -> urlGenerator -> generate('home_user'));
-        }
+            if(in_array("ROLE_ADMIN", $roles)){
+                return new RedirectResponse ( $this -> urlGenerator -> generate('home_admin'));
+            }
+            elseif(in_array("ROLE_LENDER", $roles)){
+                return new RedirectResponse ( $this -> urlGenerator -> generate('home_lender'));
+            }
+            else{
+                return new RedirectResponse ( $this -> urlGenerator -> generate('home_user'));
+            }
+        
+        
+
+        
 /*
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
